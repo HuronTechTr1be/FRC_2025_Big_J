@@ -18,7 +18,7 @@ public class ClimbSubsystem extends SubsystemBase {
 
         climb = new SparkMax(deviceId, MotorType.kBrushless);
         m_relativeEncoder = climb.getEncoder();
-        m_limitSwitch = climb.getForwardLimitSwitch(SparkLimitSwitch.Type.kNormallyOpen);
+        m_limitSwitch = climb.getForwardLimitSwitch();
 
         // Maybe: If the second magnet is still attached and we power up on the switch,
         // move down until just off the switch before setting zero, similar to algae

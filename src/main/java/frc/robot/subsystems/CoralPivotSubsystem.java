@@ -28,7 +28,7 @@ public class CoralPivotSubsystem extends SubsystemBase {
 
         m_coralPivot = new SparkMax(deviceId, MotorType.kBrushless);
         m_relativeEncoder = m_coralPivot.getEncoder();
-        m_limitSwitch = m_coralPivot.getForwardLimitSwitch(SparkLimitSwitch.Type.kNormallyOpen);
+        m_limitSwitch = m_coralPivot.getForwardLimitSwitch();
 
         // coralTab.addNumber("Coral Position", () -> getPivotEncoder());
         // coralTab.addBoolean("Coral Raised", () -> isRaised());

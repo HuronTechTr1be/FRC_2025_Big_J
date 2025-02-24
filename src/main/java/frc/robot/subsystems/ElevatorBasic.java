@@ -31,7 +31,7 @@ public class ElevatorBasic {
 
         elevator = new SparkMax(deviceId, MotorType.kBrushless);
         m_RelativeEncoder = elevator.getEncoder();
-        m_LimitSwitch = elevator.getForwardLimitSwitch(SparkLimitSwitch.Type.kNormallyOpen);
+        m_LimitSwitch = elevator.getForwardLimitSwitch();
 
         m_elevatorSide = elevatorSide;
 
@@ -39,11 +39,11 @@ public class ElevatorBasic {
 
     }
 
-    public void setRampRate(int rampRate) {
+    // public void setRampRate(int rampRate) {
 
-        elevator.setOpenLoopRampRate(rampRate);
+    //     elevator.setRampRate(rampRate);
 
-    }
+    // }
 
     // Test PIDController Code
     // public void setTargetPosition(double position){

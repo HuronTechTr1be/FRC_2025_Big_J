@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.revrobotics.spark.SparkLimitSwitch;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLimitSwitch;
@@ -27,7 +28,7 @@ public class AlgaePivotSubsystem extends SubsystemBase {
 
         m_algaePivot = new SparkMax(deviceId, MotorType.kBrushless);
         m_relativeEncoder = m_algaePivot.getEncoder();
-        m_limitSwitch = m_algaePivot.getForwardLimitSwitch(SparkLimitSwitch.type.kNormallyOpen);
+        m_limitSwitch = m_algaePivot.getForwardLimitSwitch();
 
         SetZeroInit();
     }
