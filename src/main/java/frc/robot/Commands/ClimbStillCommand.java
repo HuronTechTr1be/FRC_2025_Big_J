@@ -18,7 +18,7 @@ public class ClimbStillCommand extends Command {
     @Override
     public void initialize() {
 
-        m_climb.climbStill();
+        m_climb.ClimbStill();
 
     }
 

@@ -183,6 +183,30 @@ public class CoralPivotSubsystem extends SubsystemBase {
 
     }
 
+    public void SetPivotRaised() {
+        m_goingUp = true;
+        m_goingDown = false;
+
+        if (isRaised()) {
+            pivotStill();
+        } else { 
+            pivotUp();
+        }
+
+    }
+
+    public void SetPivotLowered() {
+        m_goingUp = false;
+        m_goingDown = true;
+
+        if (isLowered()) {
+            pivotStill();
+        } else { 
+            pivotDown();
+        }
+
+    }
+
     private void UpdateDashboard() {
 
         SmartDashboard.putNumber("Coral Position", getPosition());
