@@ -18,12 +18,12 @@ public class ClimbDownCommand extends Command {
     @Override
     public void initialize() {
 
-        m_climb.climbDown();
-        while (m_climb.getClimbEncoder() > (-15)) {
+        // m_climb.climbDown();
+        // while (m_climb.getClimbEncoder() > (-15)) {
 
-        }
+        // }
 
-        m_climb.climbStill();
+        // m_climb.climbStill();
 
     }
 

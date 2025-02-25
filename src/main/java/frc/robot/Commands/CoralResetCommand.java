@@ -18,13 +18,14 @@ public class CoralResetCommand extends Command {
     @Override
     public void initialize() {
 
-        m_coralPosition.pivotDown();
-        while (m_coralPosition.getPosition() > (-15)) {
+        // m_coralPosition.pivotDown();
+        // while (m_coralPosition.getPosition() > (-15)) {
 
-        }
+        // }
 
-        m_coralPosition.pivotStill();
+        // m_coralPosition.pivotStill();
 
+        m_coralPosition.SetPivotRaised();
     }
 
     @Override
