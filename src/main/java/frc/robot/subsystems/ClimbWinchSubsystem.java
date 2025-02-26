@@ -48,7 +48,7 @@ public class ClimbWinchSubsystem {
 
 
     public boolean isOnSwitch() {
-        return (m_LimitSwitch.isPressed());
+        return false;   // (m_LimitSwitch.isPressed());
     }
 
     public double getCurrent() {

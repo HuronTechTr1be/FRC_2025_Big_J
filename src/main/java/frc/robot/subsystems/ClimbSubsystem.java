@@ -23,92 +23,93 @@ public class ClimbSubsystem extends SubsystemBase {
 
     public ClimbSubsystem() {
 
-        m_climbLeft = new ClimbPivotSubsystem(51, "left");
-        m_climbRight = new ClimbPivotSubsystem(52, "right");
-//        m_climbWinch = new ClimbWinchSubsystem(53);
-        SetZeroInit();
+//        m_climbLeft = new ClimbPivotSubsystem(51, "left");
+//        m_climbRight = new ClimbPivotSubsystem(52, "right");
+        m_climbWinch = new ClimbWinchSubsystem(51);
+//        SetZeroInit();
 
     }
 
 
-    public void SetZeroInit() {
+    // public void SetZeroInit() {
 
-        m_findHome = true;
-        m_climbLeft.setZero();
-        m_climbRight.setZero();
+    //     m_findHome = true;
+    //     m_climbLeft.setZero();
+    //     m_climbRight.setZero();
 
-        if (atUpperLimit() == false) {
-            ClimbUp(ClimbSubsystemConstants.k_speedUpFactor);
-        } else {
-            m_findHome = false;
-        }
-    }
+    //     if (atUpperLimit() == false) {
+    //         ClimbUp(ClimbSubsystemConstants.k_speedUpFactor);
+    //     } else {
+    //         m_findHome = false;
+    //     }
+    // }
 
-    private void SetZeroFinish() {
+    // private void SetZeroFinish() {
 
-        ClimbUp();
+    //     ClimbUp();
 
-        if (atUpperLimit()) {
-            ClimbStill();
-            m_climbLeft.setZero();
-            m_climbRight.setZero();
+    //     if (atUpperLimit()) {
+    //         ClimbStill();
+    //         m_climbLeft.setZero();
+    //         m_climbRight.setZero();
 
-            m_findHome = false;
-        }
-    }
+    //         m_findHome = false;
+    //     }
+    // }
 
     private void UpdateDashboard() {
 
-        SmartDashboard.putBoolean("Climb Find Home", m_findHome);
-        SmartDashboard.putBoolean("Climb Lowered", atLowerLimit());
-        SmartDashboard.putBoolean("Climb Raised", atUpperLimit());
-        SmartDashboard.putNumber("Climb Left Position", m_climbLeft.getPosition());
-        SmartDashboard.putNumber("Climb Right Position", m_climbRight.getPosition());
+        // SmartDashboard.putBoolean("Climb Find Home", m_findHome);
+        // SmartDashboard.putBoolean("Climb Lowered", atLowerLimit());
+        // SmartDashboard.putBoolean("Climb Raised", atUpperLimit());
+        // SmartDashboard.putNumber("Climb Left Position", m_climbLeft.getPosition());
+        // SmartDashboard.putNumber("Climb Right Position", m_climbRight.getPosition());
+        SmartDashboard.putNumber("Climb Winch Position", getPosition());
     }
 
     public void periodic() {
 
-        if (m_findHome) {
-            SetZeroFinish();
-        }
+        // if (m_findHome) {
+        //     SetZeroFinish();
+        // }
 
-        if (ClimbLowered()) {
-            if (m_target == "Lowered") {
-                ClimbStill();
-            }
-        }
+        // if (ClimbLowered()) {
+        //     if (m_target == "Lowered") {
+        //         ClimbStill();
+        //     }
+        // }
 
-        if (ClimbMiddle()) {
-            if (m_target == "Middle") {
-                ClimbStill();
-            }
-        }
+        // if (ClimbMiddle()) {
+        //     if (m_target == "Middle") {
+        //         ClimbStill();
+        //     }
+        // }
 
-        if (ClimbRaised()) {
-            m_climbLeft.setZero();
-            m_climbRight.setZero();
-            if (m_target == "Raised") {
-                ClimbStill();
-            }
-        }
+        // if (ClimbRaised()) {
+        //     m_climbLeft.setZero();
+        //     m_climbRight.setZero();
+        //     if (m_target == "Raised") {
+        //         ClimbStill();
+        //     }
+        // }
 
-        m_climbRight.periodic();
-        m_climbLeft.periodic();
+        // m_climbRight.periodic();
+        // m_climbLeft.periodic();
 
         UpdateDashboard();
 
     }
 
     public double getPosition() {
-        return m_climbRight.getPosition();
+        return m_climbWinch.getPosition();
     }
 
     public boolean atLowerLimit() {
-        return m_climbLeft.isOnSwitch();
+        return false;   //m_climbLeft.isOnSwitch();
     }
 
     public boolean atUpperLimit() {
-        return m_climbRight.isOnSwitch();
+        return false;   //m_climbRight.isOnSwitch();
     }
 
 
@@ -130,11 +131,13 @@ public class ClimbSubsystem extends SubsystemBase {
         m_movingDown = true;
 
         if (ClimbLowered()) {
-            m_climbLeft.Still();
-            m_climbRight.Still();
+            // m_climbLeft.Still();
+            // m_climbRight.Still();
+            m_climbWinch.Still();
         } else {
-            m_climbLeft.Down(speed);
-            m_climbRight.Down(speed);
+            // m_climbLeft.Down(speed);
+            // m_climbRight.Down(speed);
+            m_climbWinch.Down(speed);
             m_movingDown = true;
 
         }
@@ -146,11 +149,13 @@ public class ClimbSubsystem extends SubsystemBase {
         m_movingDown = true;
 
         if (ClimbLowered()) {
-            m_climbLeft.Still();
-            m_climbRight.Still();
+            // m_climbLeft.Still();
+            // m_climbRight.Still();
+            m_climbWinch.Still();
         } else {
-            m_climbLeft.Down();
-            m_climbRight.Down();
+            // m_climbLeft.Down();
+            // m_climbRight.Down();
+            m_climbWinch.Down();
             m_movingDown = true;
 
         }
@@ -160,11 +165,13 @@ public class ClimbSubsystem extends SubsystemBase {
     
     public void ClimbUp(double speed) {
         if (ClimbRaised()) {
-            m_climbLeft.Still();
-            m_climbRight.Still();
+            // m_climbLeft.Still();
+            // m_climbRight.Still();
+            m_climbWinch.Still();
         } else {
-            m_climbLeft.Up(speed);
-            m_climbRight.Up(speed);
+            // m_climbLeft.Up(speed);
+            // m_climbRight.Up(speed);
+            m_climbWinch.Up(speed);
             m_movingUp = true;
 
         }
@@ -173,11 +180,13 @@ public class ClimbSubsystem extends SubsystemBase {
     
     public void ClimbUp() {
         if (ClimbRaised()) {
-            m_climbLeft.Still();
-            m_climbRight.Still();
+            // m_climbLeft.Still();
+            // m_climbRight.Still();
+            m_climbWinch.Still();
         } else {
-            m_climbLeft.Up();
-            m_climbRight.Up();
+            // m_climbLeft.Up();
+            // m_climbRight.Up();
+            m_climbWinch.Up();
             m_movingUp = true;
 
         }
@@ -185,8 +194,9 @@ public class ClimbSubsystem extends SubsystemBase {
     }
 
     public void ClimbStill() {
-        m_climbLeft.Still();
-        m_climbRight.Still();
+        // m_climbLeft.Still();
+        // m_climbRight.Still();
+        m_climbWinch.Still();
 
         m_target = "";
         m_movingDown = false;

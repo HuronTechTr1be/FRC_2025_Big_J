@@ -20,13 +20,7 @@ public class ClimbUpCommand extends Command {
     @Override
     public void initialize() {
 
-        // m_climb.climbUp();
-        // while (m_climb.isRaised() == false) {
-
-        // }
-
-        // m_climb.climbEncoderZero();
-        // m_climb.climbStill();
+        m_climb.ClimbUp();
 
     }
 

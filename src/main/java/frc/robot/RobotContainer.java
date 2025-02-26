@@ -69,6 +69,7 @@ public class RobotContainer {
 
     // The following "drive" should be used for a robot-centric design
     private final SwerveRequest.RobotCentric drive = new SwerveRequest.RobotCentric()
+        .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1)
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
     
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
@@ -116,7 +117,6 @@ public class RobotContainer {
     ElevatorSetMiddleCommand ElevatorSetMiddle = new ElevatorSetMiddleCommand(m_elevator);
     ElevatorSetLoweredCommand ElevatorSetLowered = new ElevatorSetLoweredCommand(m_elevator);
 
-        // commented out while sparks are disconnected
     // ClimbDownCommand climbDown = new ClimbDownCommand(m_climb);
     // ClimbUpCommand climbUp = new ClimbUpCommand(m_climb);
     // ClimbStillCommand climbStill = new ClimbStillCommand(m_climb);
@@ -156,7 +156,6 @@ public class RobotContainer {
         NamedCommands.registerCommand("elevatorDown", elevatorDown);
         NamedCommands.registerCommand("elevatorStill", elevatorStill);
 
-        // commented out while sparks are disconnected
         // NamedCommands.registerCommand("climbUp", climbUp);
         // NamedCommands.registerCommand("climbDown", climbDown);
         // NamedCommands.registerCommand("climbStill", climbStill);
@@ -259,6 +258,8 @@ public class RobotContainer {
 
 
         // Algae commands
+        RightBumperDriver.onTrue(AlgaeRelease);
+        RightBumperDriver.onFalse(AlgaeStill);
 
         // Climb commands
 
@@ -292,17 +293,17 @@ public class RobotContainer {
         // algae functions - 
         // NEED: RUN INTAKE LONGER AT PICKUP
 
-        if (RightTriggerDriver.getAsBoolean()) {
-            m_algaePivot.algaePivotDown();
-            m_algae.IntakeAlgae();
-        } else {
-            m_algaePivot.SetAlgaePivotMiddle();
+        // if (RightTriggerDriver.getAsBoolean()) {
+        //     m_algaePivot.algaePivotDown();
+        //     m_algae.IntakeAlgae();
+        // } else {
+        //     m_algaePivot.SetAlgaePivotMiddle();
             
-            if (RightBumperDriver.getAsBoolean()) {
-                m_algae.ReleaseAlgae();
-            } else {
-                m_algae.Still();
-            }
+        //     if (RightBumperDriver.getAsBoolean()) {
+        //         m_algae.ReleaseAlgae();
+        //     } else {
+        //         m_algae.Still();
+        //     }
         
             // algae functions for getting encoder values
             // if (XButtonDriver.getAsBoolean()) {
@@ -312,7 +313,7 @@ public class RobotContainer {
             // } else {
             // m_algaePivot.algaePivotStill();
             // }
-        }
+        //}
         
         if (LeftTriggerDriver.getAsBoolean()) {
             m_algaePivot.algaePivotUp();

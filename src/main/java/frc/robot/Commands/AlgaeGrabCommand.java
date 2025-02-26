@@ -24,7 +24,7 @@ public class AlgaeGrabCommand extends Command {
     @Override
     public void initialize() {
 
-        // m_algae.IntakeAlgae();
+        m_algae.IntakeAlgae();
         // m_algaePivot.goingDown();
 
         // if(m_algaePivot.isLowered()){
