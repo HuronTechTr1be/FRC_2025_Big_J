@@ -6,12 +6,16 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.util.Date;
+
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -32,6 +36,7 @@ import frc.robot.Commands.AlgaeGrabCommand;
 import frc.robot.Commands.CoralGrabCommand;
 import frc.robot.Commands.CoralResetCommand;
 import frc.robot.Commands.CoralScoreCommand;
+import frc.robot.Commands.CoralStillCommand;
 import frc.robot.Commands.CoralPositionStillCommand;
 import frc.robot.Commands.AlgaeDownCommand;
 import frc.robot.Commands.AlgaePositionStillCommand;
@@ -52,7 +57,7 @@ public class RobotContainer {
                                                                                       // max angular velocity
 
     /* Setting up bindings for necessary control of the swerve drive platform */
-    private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+    private final SwerveRequest.RobotCentric drive = new SwerveRequest.RobotCentric()
             .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
@@ -107,6 +112,7 @@ public class RobotContainer {
 
     CoralGrabCommand CoralGrab = new CoralGrabCommand(m_coral);
     CoralReleaseCommand CoralRelease = new CoralReleaseCommand(m_coral);
+    CoralStillCommand CoralStill = new CoralStillCommand(m_coral);
 
     AlgaeDownCommand AlgaePositionDown = new AlgaeDownCommand(m_algaePivot);
     AlgaeUpCommand AlgaePositionUp = new AlgaeUpCommand(m_algaePivot);
@@ -117,6 +123,15 @@ public class RobotContainer {
     AlgaeStillCommand AlgaeStill = new AlgaeStillCommand(m_algae);
 
     PathPlannerAuto testautoooo;
+    PathPlannerAuto newauto;
+    PathPlannerAuto straight;
+    PathPlannerAuto straightAlgae;
+    PathPlannerAuto rightHander;
+    PathPlannerAuto spinauto;
+    PathPlannerAuto gavindumb;
+
+    private final SendableChooser<Command> autoChooser;
+
 
     public RobotContainer() {
 
@@ -135,6 +150,7 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("CoralGrab", CoralGrab);
         NamedCommands.registerCommand("CoralRelease", CoralRelease);
+        NamedCommands.registerCommand("CoralStill", CoralStill);
 
         // Algae
         NamedCommands.registerCommand("AlgaePositionDown", AlgaePositionDown);
@@ -146,20 +162,28 @@ public class RobotContainer {
         NamedCommands.registerCommand("AlgaeStill", AlgaeStill);
 
         testautoooo = new PathPlannerAuto("TestAuto");
+        newauto = new PathPlannerAuto("New Auto");
+        spinauto = new PathPlannerAuto("Spin");
+        gavindumb = new PathPlannerAuto("Gavins dumb little path");
+
+        autoChooser = AutoBuilder.buildAutoChooser("Straight");
+        SmartDashboard.putData("Auto Mode", autoChooser);
 
         configureBindings();
     }
+
+    public double slowDownFactor;
 
     private void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
         drivetrain.setDefaultCommand(
                 // Drivetrain will execute this command periodically
-                drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with
+                drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * MaxSpeed*slowDownFactor) // Drive forward with
                                                                                                    // negative Y
                                                                                                    // (forward)
-                        .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                        .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with
+                        .withVelocityY(-joystick.getLeftX() * MaxSpeed*slowDownFactor) // Drive left with negative X (left)
+                        .withRotationalRate(-joystick.getRightX() * MaxAngularRate*slowDownFactor) // Drive counterclockwise with
                                                                                     // negative X (left)
                 ));
 
@@ -182,6 +206,14 @@ public class RobotContainer {
     }
 
     public void periodic() {
+
+
+        if(XButtonDriver.getAsBoolean()){
+            slowDownFactor = .2;
+        }
+        else{
+            slowDownFactor = 1;
+        }
 
         // algae functions - 
         // NEED: RUN INTAKE LONGER AT PICKUP
@@ -210,7 +242,8 @@ public class RobotContainer {
         if (LeftTriggerDriver.getAsBoolean()) {
             m_algaePivot.algaePivotUp();
             }
-    
+         
+
 
             // coral pivot testing functions
         if (RightTriggerOp.getAsBoolean()) {
@@ -222,22 +255,21 @@ public class RobotContainer {
             //SmartDashboard.putBoolean("Right Trigger", false);
                 m_coralPivot.pivotStill();
             }
+          
+
         
             // coral functions
         if (LeftTriggerOp.getAsBoolean()) {
-                SmartDashboard.putBoolean("Coral Intake", false);
-                SmartDashboard.putBoolean("Coral Release", true);
-                m_coral.ReleaseCoral();
+                     m_coral.ReleaseCoral();
             } else if (LeftBumperOp.getAsBoolean()) {
-                SmartDashboard.putBoolean("Coral Intake", true);
-                SmartDashboard.putBoolean("Coral Release", false);
-                m_coral.IntakeCoral();
+                   m_coral.IntakeCoral();
             } else {
-                SmartDashboard.putBoolean("Coral Intake", false);
-                SmartDashboard.putBoolean("Coral Release", false);
-                m_coral.Still();
+                 m_coral.Still();
             }
         
+      
+
+
             // climb functions for testing
         if (StartButtonDriver.getAsBoolean() && BackButtonDriver.getAsBoolean()) {
             m_climb.climbDown();
@@ -246,9 +278,11 @@ public class RobotContainer {
         } else {
             m_climb.climbStill();
         }
-        
+   
+
+
             // elevator functions
-            // m_elevator.periodic();
+             m_elevator.periodic();
         if (YButtonOp.getAsBoolean()) {
             m_elevator.SetElevatorHigh();
             m_coralPivot.pivotDown();
@@ -262,7 +296,8 @@ public class RobotContainer {
             m_elevator.SetElevatorLowered();
             m_coralPivot.pivotUp();
         }
-    }
+
+        }
 
     // Elevator Functions for Testing
     // if (YButtonOp.getAsBoolean()) {
@@ -275,6 +310,7 @@ public class RobotContainer {
 
     public Command getAutonomousCommand() {
         // return Commands.print("No autonomous command configured");
-        return testautoooo;
+        //return newauto;
+        return autoChooser.getSelected();
     }
 }
