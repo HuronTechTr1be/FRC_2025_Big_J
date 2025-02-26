@@ -19,7 +19,7 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralRelease"
+            "name": "CoralPositionScore"
           }
         },
         {
@@ -31,7 +31,7 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralStill"
+            "name": "CoralPositionDown"
           }
         }
       ]

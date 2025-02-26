@@ -19,11 +19,7 @@ public class CoralResetCommand extends Command {
     public void initialize() {
 
         m_coralPosition.pivotDown();
-        while (m_coralPosition.getPosition() > (-15)) {
-
-        }
-
-        m_coralPosition.pivotStill();
+        
 
     }
 

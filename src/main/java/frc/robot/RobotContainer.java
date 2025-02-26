@@ -205,6 +205,28 @@ public class RobotContainer {
         drivetrain.registerTelemetry(logger::telemeterize);
     }
 
+    public void autonPeriodic(){
+        if(m_coralPivot.isLowered()){
+        if(m_coralPivot.goingUp()){
+            
+        }
+        else{
+            m_coralPivot.pivotStill();
+        }
+    }
+    if(m_coralPivot.isRaised()){
+        if(m_coralPivot.goingDown()){
+            
+        }
+        else{
+            m_coralPivot.pivotStill();
+        }
+    }
+    SmartDashboard.putNumber("coral pivot", m_coralPivot.getPosition());
+
+}
+
+
     public void periodic() {
 
 
