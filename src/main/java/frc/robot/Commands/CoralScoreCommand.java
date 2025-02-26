@@ -21,7 +21,7 @@ public class CoralScoreCommand extends Command {
     @Override
     public void initialize() {
 
-        // m_pivot.pivotUp();
+        m_coralPosition.pivotUp();
         // while (m_pivot.isRaised() == false) {
 
         // }

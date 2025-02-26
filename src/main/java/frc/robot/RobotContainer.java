@@ -6,12 +6,16 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.util.Date;
+
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -134,7 +138,17 @@ public class RobotContainer {
     AlgaeReleaseCommand AlgaeRelease = new AlgaeReleaseCommand(m_algae);
     AlgaeStillCommand AlgaeStill = new AlgaeStillCommand(m_algae);
 
-    //PathPlannerAuto testautoooo;
+
+    PathPlannerAuto testautoooo;
+    PathPlannerAuto newauto;
+    PathPlannerAuto straight;
+    PathPlannerAuto straightAlgae;
+    PathPlannerAuto rightHander;
+    PathPlannerAuto spinauto;
+    PathPlannerAuto gavindumb;
+
+    private final SendableChooser<Command> autoChooser;
+
 
     public RobotContainer() {
 
@@ -154,6 +168,7 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("CoralGrab", CoralGrab);
         NamedCommands.registerCommand("CoralRelease", CoralRelease);
+        NamedCommands.registerCommand("CoralStill", CoralStill);
 
         // Algae
         NamedCommands.registerCommand("AlgaePositionDown", AlgaePositionDown);
@@ -164,10 +179,20 @@ public class RobotContainer {
         NamedCommands.registerCommand("AlgaeRelease", AlgaeRelease);
         NamedCommands.registerCommand("AlgaeStill", AlgaeStill);
 
-        //testautoooo = new PathPlannerAuto("TestAuto");
+
+        testautoooo = new PathPlannerAuto("TestAuto");
+        newauto = new PathPlannerAuto("New Auto");
+        spinauto = new PathPlannerAuto("Spin");
+        gavindumb = new PathPlannerAuto("Gavins dumb little path");
+
+        autoChooser = AutoBuilder.buildAutoChooser("Straight");
+        SmartDashboard.putData("Auto Mode", autoChooser);
+
 
         configureBindings();
     }
+
+    public double slowDownFactor;
 
     private void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
@@ -179,7 +204,7 @@ public class RobotContainer {
             // Drive counterclockwise with negative X (left)
             drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * (LeftBumperDriver.getAsBoolean() ? (MaxSpeed / 7) : (MaxSpeed / 2))) 
                 .withVelocityY(-joystick.getLeftX() * (LeftBumperDriver.getAsBoolean() ? (MaxSpeed / 7) : (MaxSpeed / 2))) 
-                .withRotationalRate(joystick.getRightX() * MaxAngularRate / 2) 
+                .withRotationalRate(-joystick.getRightX() * MaxAngularRate / 2) 
             ));
 
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
@@ -239,7 +264,30 @@ public class RobotContainer {
 
     }
 
+    public void autonPeriodic(){
+        if(m_coralPivot.isLowered()){
+        if(m_coralPivot.goingUp()){
+            
+        }
+        else{
+            m_coralPivot.pivotStill();
+        }
+    }
+    if(m_coralPivot.isRaised()){
+        if(m_coralPivot.goingDown()){
+            
+        }
+        else{
+            m_coralPivot.pivotStill();
+        }
+    }
+    SmartDashboard.putNumber("coral pivot", m_coralPivot.getPosition());
+
+}
+
+
     public void periodic() {
+
 
         // algae functions - 
         // NEED: RUN INTAKE LONGER AT PICKUP
@@ -269,7 +317,8 @@ public class RobotContainer {
         if (LeftTriggerDriver.getAsBoolean()) {
             m_algaePivot.algaePivotUp();
             }
-    
+         
+
 
             // coral pivot testing functions
         // if (RightTriggerOp.getAsBoolean()) {
@@ -297,6 +346,9 @@ public class RobotContainer {
         //         m_coral.Still();
         //     }
         
+      
+
+
             // climb functions for testing
 
         // commented out while sparks are disconnected
@@ -337,7 +389,7 @@ public class RobotContainer {
 
     public Command getAutonomousCommand() {
         // return Commands.print("No autonomous command configured");
-        //return testautoooo;
-        return new Command() {};
+        //return newauto;
+        return autoChooser.getSelected();
     }
 }

@@ -11,15 +11,93 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "CoralRelease"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralStill"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralPositionScore"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "1_to_human_player"
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "CoralGrab"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralStill"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralPositionDown"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "human_player_to_1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralRelease"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralStill"
           }
         }
       ]

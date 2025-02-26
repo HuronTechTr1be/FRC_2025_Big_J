@@ -109,6 +109,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public boolean atUpperLimit() {
+        //return (ElevatorSubsystemConstants.k_PointRaised-m_elevatorRight.getPosition()<2);
         return m_elevatorRight.isOnSwitch();
     }
 

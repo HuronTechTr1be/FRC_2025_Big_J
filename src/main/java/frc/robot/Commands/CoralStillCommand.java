@@ -1,4 +1,3 @@
-
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,7 +21,7 @@ public class CoralStillCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        
+
         return true;
     }
 

@@ -38,6 +38,13 @@ public class CoralPivotSubsystem extends SubsystemBase {
 
     }
 
+    public boolean goingUp(){
+        return m_goingUp;
+    }
+    public boolean goingDown(){
+        return m_goingDown;
+    }
+
     public void SetZeroInit() {
 
         m_findHome = true;
