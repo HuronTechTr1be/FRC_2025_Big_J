@@ -18,7 +18,7 @@ public class ClimbDownCommand extends Command {
     @Override
     public void initialize() {
 
-        m_climb.climbDown();
+        m_climb.ClimbDown();
 
     }
 

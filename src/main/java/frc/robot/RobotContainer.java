@@ -37,8 +37,8 @@ import frc.robot.Commands.ElevatorStillCommand;
 import frc.robot.Commands.ElevatorUpCommand;
 import frc.robot.Commands.AlgaeGrabCommand;
 import frc.robot.Commands.CoralGrabCommand;
-import frc.robot.Commands.CoralResetCommand;
-import frc.robot.Commands.CoralScoreCommand;
+import frc.robot.Commands.CoralDownCommand;
+import frc.robot.Commands.CoralUpCommand;
 import frc.robot.Commands.CoralStillCommand;
 import frc.robot.Commands.CoralPositionStillCommand;
 import frc.robot.Commands.AlgaeDownCommand;
@@ -121,8 +121,8 @@ public class RobotContainer {
     // ClimbUpCommand climbUp = new ClimbUpCommand(m_climb);
     // ClimbStillCommand climbStill = new ClimbStillCommand(m_climb);
 
-    CoralResetCommand CoralPositionLoad = new CoralResetCommand(m_coralPivot);
-    CoralScoreCommand CoralPositionScore = new CoralScoreCommand(m_coralPivot);
+    CoralDownCommand CoralPositionDown = new CoralDownCommand(m_coralPivot);
+    CoralUpCommand CoralPositionUp = new CoralUpCommand(m_coralPivot);
     CoralPositionStillCommand CoralPositionStill = new CoralPositionStillCommand(m_coralPivot);
 
     CoralGrabCommand CoralGrab = new CoralGrabCommand(m_coral);
@@ -162,8 +162,8 @@ public class RobotContainer {
         // NamedCommands.registerCommand("climbStill", climbStill);
 
         // Coral
-        NamedCommands.registerCommand("CoralPositionScore", CoralPositionScore);
-        NamedCommands.registerCommand("CoralPositionDown", CoralPositionLoad);
+        NamedCommands.registerCommand("CoralPositionScore", CoralPositionUp);
+        NamedCommands.registerCommand("CoralPositionDown", CoralPositionDown);
         NamedCommands.registerCommand("CoralPositionStill", CoralPositionStill);
 
         NamedCommands.registerCommand("CoralGrab", CoralGrab);
@@ -228,27 +228,27 @@ public class RobotContainer {
 
         // Elevator commands
         YButtonOp.onTrue(ElevatorSetHigh);
-        YButtonOp.onTrue(CoralPositionScore);
+        YButtonOp.onTrue(CoralPositionDown);
         YButtonOp.onFalse(CoralPositionStill); // Here for safety until tested - remove to allow press and release
 
         BButtonOp.onTrue(ElevatorSetMiddle);
-        BButtonOp.onTrue(CoralPositionScore);
+        BButtonOp.onTrue(CoralPositionDown);
         BButtonOp.onFalse(CoralPositionStill); // Here for safety until tested - remove to allow press and release
         
         AButtonOp.onTrue(ElevatorSetLowered);
-        AButtonOp.onTrue(CoralPositionScore);
+        AButtonOp.onTrue(CoralPositionDown);
         AButtonOp.onFalse(CoralPositionStill); // Here for safety until tested - remove to allow press and release
 
         XButtonOp.onTrue(ElevatorSetLowered);
-        XButtonOp.onTrue(CoralPositionLoad);
+        XButtonOp.onTrue(CoralPositionUp);
         XButtonOp.onFalse(CoralPositionStill); // Here for safety until tested - remove to allow press and release
 
 
         // Coral commands
-        RightTriggerOp.onTrue(CoralPositionScore);
+        RightTriggerOp.onTrue(CoralPositionDown);
         RightTriggerOp.onFalse(CoralPositionStill);
 
-        RightBumperOp.onTrue(CoralPositionLoad);
+        RightBumperOp.onTrue(CoralPositionUp);
         RightBumperOp.onFalse(CoralPositionStill);
 
         LeftTriggerOp.onTrue(CoralRelease);
