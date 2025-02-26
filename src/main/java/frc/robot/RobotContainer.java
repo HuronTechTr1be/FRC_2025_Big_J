@@ -30,6 +30,9 @@ import frc.robot.Commands.ClimbDownCommand;
 import frc.robot.Commands.ClimbStillCommand;
 import frc.robot.Commands.ClimbUpCommand;
 import frc.robot.Commands.ElevatorDownCommand;
+import frc.robot.Commands.ElevatorSetHighCommand;
+import frc.robot.Commands.ElevatorSetLoweredCommand;
+import frc.robot.Commands.ElevatorSetMiddleCommand;
 import frc.robot.Commands.ElevatorStillCommand;
 import frc.robot.Commands.ElevatorUpCommand;
 import frc.robot.Commands.AlgaeGrabCommand;
@@ -52,14 +55,22 @@ import frc.robot.subsystems.CoralSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 
 public class RobotContainer {
-    private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second
-                                                                                      // max angular velocity
+    // kSpeedAt12Volts desired top speed
+    private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); 
+    // 3/4 of a rotation per second max angular velocity
+    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond);
 
     /* Setting up bindings for necessary control of the swerve drive platform */
+
+    // The following "drive" should be used for a field-centric design
+    // private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+    //         .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+    //         .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+
+    // The following "drive" should be used for a robot-centric design
     private final SwerveRequest.RobotCentric drive = new SwerveRequest.RobotCentric()
-            .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
-            .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+        .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
+    
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
@@ -70,12 +81,12 @@ public class RobotContainer {
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
     private CoralSubsystem m_coral = new CoralSubsystem(21);
-
     private CoralPivotSubsystem m_coralPivot = new CoralPivotSubsystem(22);
+
     private AlgaeSubsystem m_algae = new AlgaeSubsystem(61);
     private AlgaePivotSubsystem m_algaePivot = new AlgaePivotSubsystem(62);
 
-    private ClimbSubsystem m_climb = new ClimbSubsystem(51);
+//    private ClimbSubsystem m_climb = new ClimbSubsystem();
     private ElevatorSubsystem m_elevator = new ElevatorSubsystem();
 
     Trigger XButtonOp = operator.x();
@@ -101,18 +112,23 @@ public class RobotContainer {
     ElevatorUpCommand elevatorUp = new ElevatorUpCommand(m_elevator);
     ElevatorDownCommand elevatorDown = new ElevatorDownCommand(m_elevator);
     ElevatorStillCommand elevatorStill = new ElevatorStillCommand(m_elevator);
+    ElevatorSetHighCommand ElevatorSetHigh = new ElevatorSetHighCommand(m_elevator);
+    ElevatorSetMiddleCommand ElevatorSetMiddle = new ElevatorSetMiddleCommand(m_elevator);
+    ElevatorSetLoweredCommand ElevatorSetLowered = new ElevatorSetLoweredCommand(m_elevator);
 
-    ClimbDownCommand climbDown = new ClimbDownCommand(m_climb);
-    ClimbUpCommand climbUp = new ClimbUpCommand(m_climb);
-    ClimbStillCommand climbStill = new ClimbStillCommand(m_climb);
+        // commented out while sparks are disconnected
+    // ClimbDownCommand climbDown = new ClimbDownCommand(m_climb);
+    // ClimbUpCommand climbUp = new ClimbUpCommand(m_climb);
+    // ClimbStillCommand climbStill = new ClimbStillCommand(m_climb);
 
-    CoralResetCommand CoralPositionDown = new CoralResetCommand(m_coralPivot);
+    CoralResetCommand CoralPositionLoad = new CoralResetCommand(m_coralPivot);
     CoralScoreCommand CoralPositionScore = new CoralScoreCommand(m_coralPivot);
     CoralPositionStillCommand CoralPositionStill = new CoralPositionStillCommand(m_coralPivot);
 
     CoralGrabCommand CoralGrab = new CoralGrabCommand(m_coral);
     CoralReleaseCommand CoralRelease = new CoralReleaseCommand(m_coral);
     CoralStillCommand CoralStill = new CoralStillCommand(m_coral);
+
 
     AlgaeDownCommand AlgaePositionDown = new AlgaeDownCommand(m_algaePivot);
     AlgaeUpCommand AlgaePositionUp = new AlgaeUpCommand(m_algaePivot);
@@ -121,6 +137,7 @@ public class RobotContainer {
     AlgaeGrabCommand AlgaeGrab = new AlgaeGrabCommand(m_algae, m_algaePivot);
     AlgaeReleaseCommand AlgaeRelease = new AlgaeReleaseCommand(m_algae);
     AlgaeStillCommand AlgaeStill = new AlgaeStillCommand(m_algae);
+
 
     PathPlannerAuto testautoooo;
     PathPlannerAuto newauto;
@@ -139,13 +156,14 @@ public class RobotContainer {
         NamedCommands.registerCommand("elevatorDown", elevatorDown);
         NamedCommands.registerCommand("elevatorStill", elevatorStill);
 
-        NamedCommands.registerCommand("climbUp", climbUp);
-        NamedCommands.registerCommand("climbDown", climbDown);
-        NamedCommands.registerCommand("climbStill", climbStill);
+        // commented out while sparks are disconnected
+        // NamedCommands.registerCommand("climbUp", climbUp);
+        // NamedCommands.registerCommand("climbDown", climbDown);
+        // NamedCommands.registerCommand("climbStill", climbStill);
 
         // Coral
         NamedCommands.registerCommand("CoralPositionScore", CoralPositionScore);
-        NamedCommands.registerCommand("CoralPositionDown", CoralPositionDown);
+        NamedCommands.registerCommand("CoralPositionDown", CoralPositionLoad);
         NamedCommands.registerCommand("CoralPositionStill", CoralPositionStill);
 
         NamedCommands.registerCommand("CoralGrab", CoralGrab);
@@ -161,6 +179,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("AlgaeRelease", AlgaeRelease);
         NamedCommands.registerCommand("AlgaeStill", AlgaeStill);
 
+
         testautoooo = new PathPlannerAuto("TestAuto");
         newauto = new PathPlannerAuto("New Auto");
         spinauto = new PathPlannerAuto("Spin");
@@ -168,6 +187,7 @@ public class RobotContainer {
 
         autoChooser = AutoBuilder.buildAutoChooser("Straight");
         SmartDashboard.putData("Auto Mode", autoChooser);
+
 
         configureBindings();
     }
@@ -178,14 +198,14 @@ public class RobotContainer {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
         drivetrain.setDefaultCommand(
-                // Drivetrain will execute this command periodically
-                drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * MaxSpeed*slowDownFactor) // Drive forward with
-                                                                                                   // negative Y
-                                                                                                   // (forward)
-                        .withVelocityY(-joystick.getLeftX() * MaxSpeed*slowDownFactor) // Drive left with negative X (left)
-                        .withRotationalRate(-joystick.getRightX() * MaxAngularRate*slowDownFactor) // Drive counterclockwise with
-                                                                                    // negative X (left)
-                ));
+            // Drivetrain will execute this command periodically
+            // Drive forward with negative Y (forward)
+            // Drive left with negative X (left)
+            // Drive counterclockwise with negative X (left)
+            drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * (LeftBumperDriver.getAsBoolean() ? (MaxSpeed / 7) : (MaxSpeed / 2))) 
+                .withVelocityY(-joystick.getLeftX() * (LeftBumperDriver.getAsBoolean() ? (MaxSpeed / 7) : (MaxSpeed / 2))) 
+                .withRotationalRate(-joystick.getRightX() * MaxAngularRate / 2) 
+            ));
 
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
         joystick.b().whileTrue(drivetrain.applyRequest(
@@ -193,16 +213,55 @@ public class RobotContainer {
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
-
-        joystick.back().and(joystick.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
-        joystick.back().and(joystick.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-        joystick.start().and(joystick.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-        joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
+        // joystick.back().and(joystick.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
+        // joystick.back().and(joystick.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
+        // joystick.start().and(joystick.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
+        // joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
         // reset the field-centric heading on left bumper press
-        joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+        //joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
         drivetrain.registerTelemetry(logger::telemeterize);
+
+        // Sample to use Runnable commands - not working properly
+        //YButtonOp.onTrue(m_coralPivot.runOnce(m_coralPivot.SetPivotLowered()));
+
+        // Elevator commands
+        YButtonOp.onTrue(ElevatorSetHigh);
+        YButtonOp.onTrue(CoralPositionScore);
+        YButtonOp.onFalse(CoralPositionStill); // Here for safety until tested - remove to allow press and release
+
+        BButtonOp.onTrue(ElevatorSetMiddle);
+        BButtonOp.onTrue(CoralPositionScore);
+        BButtonOp.onFalse(CoralPositionStill); // Here for safety until tested - remove to allow press and release
+        
+        AButtonOp.onTrue(ElevatorSetLowered);
+        AButtonOp.onTrue(CoralPositionScore);
+        AButtonOp.onFalse(CoralPositionStill); // Here for safety until tested - remove to allow press and release
+
+        XButtonOp.onTrue(ElevatorSetLowered);
+        XButtonOp.onTrue(CoralPositionLoad);
+        XButtonOp.onFalse(CoralPositionStill); // Here for safety until tested - remove to allow press and release
+
+
+        // Coral commands
+        RightTriggerOp.onTrue(CoralPositionScore);
+        RightTriggerOp.onFalse(CoralPositionStill);
+
+        RightBumperOp.onTrue(CoralPositionLoad);
+        RightBumperOp.onFalse(CoralPositionStill);
+
+        LeftTriggerOp.onTrue(CoralRelease);
+        LeftTriggerOp.onFalse(CoralStill);
+
+        LeftBumperOp.onTrue(CoralGrab);
+        LeftBumperOp.onFalse(CoralStill);
+
+
+        // Algae commands
+
+        // Climb commands
+
     }
 
     public void autonPeriodic(){
@@ -230,26 +289,20 @@ public class RobotContainer {
     public void periodic() {
 
 
-        if(XButtonDriver.getAsBoolean()){
-            slowDownFactor = .2;
-        }
-        else{
-            slowDownFactor = 1;
-        }
-
         // algae functions - 
         // NEED: RUN INTAKE LONGER AT PICKUP
+
         if (RightTriggerDriver.getAsBoolean()) {
             m_algaePivot.algaePivotDown();
             m_algae.IntakeAlgae();
         } else {
             m_algaePivot.SetAlgaePivotMiddle();
             
-        if (RightBumperDriver.getAsBoolean()) {
-            m_algae.ReleaseAlgae();
-        } else {
-            m_algae.Still();
-        }
+            if (RightBumperDriver.getAsBoolean()) {
+                m_algae.ReleaseAlgae();
+            } else {
+                m_algae.Still();
+            }
         
             // algae functions for getting encoder values
             // if (XButtonDriver.getAsBoolean()) {
@@ -259,7 +312,7 @@ public class RobotContainer {
             // } else {
             // m_algaePivot.algaePivotStill();
             // }
-            }
+        }
         
         if (LeftTriggerDriver.getAsBoolean()) {
             m_algaePivot.algaePivotUp();
@@ -268,58 +321,62 @@ public class RobotContainer {
 
 
             // coral pivot testing functions
-        if (RightTriggerOp.getAsBoolean()) {
-            //SmartDashboard.putBoolean("Right Trigger", true);
-            m_coralPivot.pivotDown();
-            } else if (RightBumperOp.getAsBoolean()) {
-                m_coralPivot.pivotUp();
-            } else {
-            //SmartDashboard.putBoolean("Right Trigger", false);
-                m_coralPivot.pivotStill();
-            }
-          
-
+        // if (RightTriggerOp.getAsBoolean()) {
+        //     //SmartDashboard.putBoolean("Right Trigger", true);
+        //     m_coralPivot.pivotDown();
+        //     } else if (RightBumperOp.getAsBoolean()) {
+        //         m_coralPivot.pivotUp();
+        //     } else {
+        //     //SmartDashboard.putBoolean("Right Trigger", false);
+        //         m_coralPivot.pivotStill();
+        //     }
         
             // coral functions
-        if (LeftTriggerOp.getAsBoolean()) {
-                     m_coral.ReleaseCoral();
-            } else if (LeftBumperOp.getAsBoolean()) {
-                   m_coral.IntakeCoral();
-            } else {
-                 m_coral.Still();
-            }
+        // if (LeftTriggerOp.getAsBoolean()) {
+        //         SmartDashboard.putBoolean("Coral Intake", false);
+        //         SmartDashboard.putBoolean("Coral Release", true);
+        //         m_coral.ReleaseCoral();
+        //     } else if (LeftBumperOp.getAsBoolean()) {
+        //         SmartDashboard.putBoolean("Coral Intake", true);
+        //         SmartDashboard.putBoolean("Coral Release", false);
+        //         m_coral.IntakeCoral();
+        //     } else {
+        //         SmartDashboard.putBoolean("Coral Intake", false);
+        //         SmartDashboard.putBoolean("Coral Release", false);
+        //         m_coral.Still();
+        //     }
         
       
 
 
             // climb functions for testing
-        if (StartButtonDriver.getAsBoolean() && BackButtonDriver.getAsBoolean()) {
-            m_climb.climbDown();
-        } else if (YButtonDriver.getAsBoolean()) {
-            m_climb.climbUp();
-        } else {
-            m_climb.climbStill();
-        }
-   
 
+        // commented out while sparks are disconnected
 
+        // if (StartButtonDriver.getAsBoolean() && BackButtonDriver.getAsBoolean()) {
+        //     m_climb.ClimbDown();
+        // } else if (YButtonDriver.getAsBoolean()) {
+        //     m_climb.ClimbUp();
+        // } else {
+        //     m_climb.ClimbStill();
+        // }
+        
             // elevator functions
-             m_elevator.periodic();
-        if (YButtonOp.getAsBoolean()) {
-            m_elevator.SetElevatorHigh();
-            m_coralPivot.pivotDown();
-        } else if (AButtonOp.getAsBoolean()) {
-            m_elevator.SetElevatorLowered();
-            m_coralPivot.pivotDown();
-        } else if (BButtonOp.getAsBoolean()) {
-            m_elevator.SetElevatorMiddle();
-            m_coralPivot.pivotDown();
-        } else if (XButtonOp.getAsBoolean()) {
-            m_elevator.SetElevatorLowered();
-            m_coralPivot.pivotUp();
-        }
-
-        }
+            // m_elevator.periodic();
+        // if (YButtonOp.getAsBoolean()) {
+        //     m_elevator.SetElevatorHigh();
+        //     m_coralPivot.pivotDown();
+        // } else if (AButtonOp.getAsBoolean()) {
+        //     m_elevator.SetElevatorLowered();
+        //     m_coralPivot.pivotDown();
+        // } else if (BButtonOp.getAsBoolean()) {
+        //     m_elevator.SetElevatorMiddle();
+        //     m_coralPivot.pivotDown();
+        // } else if (XButtonOp.getAsBoolean()) {
+        //     m_elevator.SetElevatorLowered();
+        //     m_coralPivot.pivotUp();
+        // }
+    }
 
     // Elevator Functions for Testing
     // if (YButtonOp.getAsBoolean()) {

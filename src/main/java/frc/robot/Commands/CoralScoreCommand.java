@@ -29,6 +29,7 @@ public class CoralScoreCommand extends Command {
         // m_pivot.pivotEncoderZero();
         // m_pivot.pivotStill();
 
+        m_coralPosition.SetPivotLowered();
     }
 
     @Override

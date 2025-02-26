@@ -20,7 +20,6 @@ public class CoralResetCommand extends Command {
 
         m_coralPosition.pivotDown();
         
-
     }
 
     @Override

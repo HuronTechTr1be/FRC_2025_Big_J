@@ -21,6 +21,7 @@ public class CoralStillCommand extends Command {
 
     @Override
     public boolean isFinished() {
+
         return true;
     }
 
