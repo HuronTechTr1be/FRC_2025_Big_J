@@ -118,7 +118,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public boolean ElevatorRaised() {
-        return atUpperLimit();
+        return (atUpperLimit() || (getPosition() > ElevatorSubsystemConstants.k_PointRaised));
     }
 
     public boolean ElevatorMiddle() {

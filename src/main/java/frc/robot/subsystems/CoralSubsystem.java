@@ -9,11 +9,16 @@ import frc.robot.generated.TunerConstants.CoralSubsystemConstants;
 public class CoralSubsystem extends SubsystemBase {
 
     private SparkMax coral;
+    private boolean m_lowered;
 
     public CoralSubsystem(int deviceId) {
 
         coral = new SparkMax(deviceId, MotorType.kBrushless);
 
+    }
+
+    public void ElevatorIsLowered(boolean lowered) {
+        m_lowered = lowered;
     }
 
     public void IntakeCoral() {
@@ -28,7 +33,11 @@ public class CoralSubsystem extends SubsystemBase {
 
     public void ReleaseCoral() {
 
-        coral.set(CoralSubsystemConstants.k_releaseFactor);
+        if (m_lowered) {
+            coral.set(CoralSubsystemConstants.k_releaseFactorLow);
+        } else {
+            coral.set(CoralSubsystemConstants.k_releaseFactor);
+        }
 
     }
 
