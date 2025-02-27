@@ -295,7 +295,7 @@ public class TunerConstants {
         public static final double k_ElevatorSpeedUp = 0.5;
         public static final double k_ElevatorSpeedDown = -0.5;
         public static final double k_ElevatorSpeedDownSlow = -0.2;
-        public static final double k_PointRaised = 85;
+        public static final double k_PointRaised = 81;
         public static final double k_PointMiddle = 13;
         public static final double k_PointLow = 10;
 
@@ -312,30 +312,31 @@ public class TunerConstants {
     public static final class CoralSubsystemConstants {
 
         public static final double k_intakeFactor = -0.2;
-        public static final double k_releaseFactor = 0.2;
+        public static final double k_releaseFactor = 0.4;
+        public static final double k_releaseFactorLow = 0.15;
+
+    }
+
+    public static final class AlgaePivotSubsystemConstants {
+
+        public static final double k_speedUpFactor = -0.3;
+        public static final double k_speedDownFactor = 0.6;
+        public static final double k_pointMiddle = 16;
+        public static final double k_pointLowered = 40;
 
     }
 
     public static final class AlgaeSubsystemConstants {
 
         public static final double k_intakeFactor = -1;
-        public static final double k_releaseFactor = 3;
-
-    }
-
-    public static final class AlgaePivotSubsystemConstants {
-
-        public static final double k_speedUpFactor = -0.4;
-        public static final double k_speedDownFactor = 0.4;
-        public static final double k_PointMiddle = 15;
-        public static final double k_pointLowered = 34;
+        public static final double k_releaseFactor = 1;
 
     }
 
     public static final class ClimbSubsystemConstants {
 
-        public static final double k_speedUpFactor = 0.4;
-        public static final double k_speedDownFactor = -0.4;
+        public static final double k_speedUpFactor = -0.4;
+        public static final double k_speedDownFactor = 0.4;
         public static final double k_PointMiddle = 15;
 
     }

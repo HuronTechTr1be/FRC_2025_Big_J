@@ -36,9 +36,10 @@ public class AlgaePivotSubsystem extends SubsystemBase {
     public void SetZeroInit() {
 
         m_findHome = true;
+        //m_relativeEncoder.setPosition(100);
 
-        if (isRaised() == true) {
-            algaePivotDown();
+        if (isRaised() == false) {
+            algaePivotUp();
 
         } else {
             m_findHome = false;
@@ -47,9 +48,9 @@ public class AlgaePivotSubsystem extends SubsystemBase {
 
     private void SetZeroFinish() {
 
-        algaePivotDown();
+        algaePivotUp();
 
-        if (isRaised() == false) {
+        if (isRaised() == true) {
             algaePivotStill();
             setZero();
 
@@ -130,12 +131,6 @@ public class AlgaePivotSubsystem extends SubsystemBase {
         // }
     }
 
-    // public void algaePivotUpInit() {
-
-    // algaePivot.set(AlgaePivotSubsystemConstants.k_speedUpFactor);
-
-    // }
-
     public void algaePivotStill() {
 
         m_algaePivot.set(0);
@@ -147,16 +142,31 @@ public class AlgaePivotSubsystem extends SubsystemBase {
     }
 
     public boolean AlgaePivotMiddle() {
-        return (Math.abs(getPosition() - AlgaePivotSubsystemConstants.k_PointMiddle) < 2);
+        return (Math.abs(getPosition() - AlgaePivotSubsystemConstants.k_pointMiddle) < 2);
+    }
+
+    public boolean AlgaePivotLowered() {
+        return (Math.abs(getPosition() - AlgaePivotSubsystemConstants.k_pointLowered) < 2);
     }
 
     public void SetAlgaePivotMiddle() {
         m_target = "Middle";
         if (AlgaePivotMiddle()) {
             algaePivotStill();
-        } else if (getPosition() < AlgaePivotSubsystemConstants.k_PointMiddle) {
+        } else if (getPosition() < AlgaePivotSubsystemConstants.k_pointMiddle) {
             algaePivotDown();
-        } else if (getPosition() > AlgaePivotSubsystemConstants.k_PointMiddle) {
+        } else if (getPosition() > AlgaePivotSubsystemConstants.k_pointMiddle) {
+            algaePivotUp();
+        }
+    }
+
+    public void SetAlgaePivotLowered() {
+        m_target = "Lowered";
+        if (AlgaePivotLowered()) {
+            algaePivotStill();
+        } else if (getPosition() < AlgaePivotSubsystemConstants.k_pointLowered) {
+            algaePivotDown();
+        } else if (getPosition() > AlgaePivotSubsystemConstants.k_pointLowered) {
             algaePivotUp();
         }
     }
@@ -169,7 +179,7 @@ public class AlgaePivotSubsystem extends SubsystemBase {
 
     public boolean isRaised() {
 
-        return m_limitSwitch.isPressed();
+        return (m_limitSwitch.isPressed()); // || (getPosition() < 0));
 
     }
 
@@ -183,6 +193,7 @@ public class AlgaePivotSubsystem extends SubsystemBase {
 
         SmartDashboard.putNumber("Algae Position", getPosition());
         SmartDashboard.putBoolean("Algae Raised", isRaised());
+        SmartDashboard.putBoolean("Algae Middle", AlgaePivotMiddle());
         SmartDashboard.putBoolean("Algae Lowered", isLowered());
         SmartDashboard.putBoolean("Algae GoingUp", m_goingUp);
         SmartDashboard.putBoolean("Algae GoingDown", m_goingDown);
@@ -198,6 +209,11 @@ public class AlgaePivotSubsystem extends SubsystemBase {
 
         if (isRaised()) {
             if (m_goingUp) {
+                algaePivotStill();
+            }
+        }
+        if (AlgaePivotMiddle()) {
+            if (m_target == "Middle") {
                 algaePivotStill();
             }
         }

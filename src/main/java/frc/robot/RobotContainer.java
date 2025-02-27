@@ -42,6 +42,7 @@ import frc.robot.Commands.CoralUpCommand;
 import frc.robot.Commands.CoralStillCommand;
 import frc.robot.Commands.CoralPositionStillCommand;
 import frc.robot.Commands.AlgaeDownCommand;
+import frc.robot.Commands.AlgaeMiddleCommand;
 import frc.robot.Commands.AlgaePositionStillCommand;
 import frc.robot.Commands.AlgaeUpCommand;
 import frc.robot.Commands.AlgaeReleaseCommand;
@@ -87,7 +88,7 @@ public class RobotContainer {
     private AlgaeSubsystem m_algae = new AlgaeSubsystem(61);
     private AlgaePivotSubsystem m_algaePivot = new AlgaePivotSubsystem(62);
 
-//    private ClimbSubsystem m_climb = new ClimbSubsystem();
+    //private ClimbSubsystem m_climb = new ClimbSubsystem();
     private ElevatorSubsystem m_elevator = new ElevatorSubsystem();
 
     Trigger XButtonOp = operator.x();
@@ -131,6 +132,7 @@ public class RobotContainer {
 
 
     AlgaeDownCommand AlgaePositionDown = new AlgaeDownCommand(m_algaePivot);
+    AlgaeMiddleCommand AlgaePositionMiddle = new AlgaeMiddleCommand(m_algaePivot);
     AlgaeUpCommand AlgaePositionUp = new AlgaeUpCommand(m_algaePivot);
     AlgaePositionStillCommand AlgaePositionStill = new AlgaePositionStillCommand(m_algaePivot);
 
@@ -171,6 +173,7 @@ public class RobotContainer {
 
         // Algae
         NamedCommands.registerCommand("AlgaePositionDown", AlgaePositionDown);
+        NamedCommands.registerCommand("AlgaePositionMiddle", AlgaePositionMiddle);
         NamedCommands.registerCommand("AlgaePositionUp", AlgaePositionUp);
         NamedCommands.registerCommand("AlgaePositionStill", AlgaePositionStill);
 
@@ -201,8 +204,8 @@ public class RobotContainer {
             // Drive forward with negative Y (forward)
             // Drive left with negative X (left)
             // Drive counterclockwise with negative X (left)
-            drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * (LeftBumperDriver.getAsBoolean() ? (MaxSpeed / 7) : (MaxSpeed / 2))) 
-                .withVelocityY(-joystick.getLeftX() * (LeftBumperDriver.getAsBoolean() ? (MaxSpeed / 7) : (MaxSpeed / 2))) 
+            drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * (LeftBumperDriver.getAsBoolean() ? (MaxSpeed / 9) : (MaxSpeed / 2))) 
+                .withVelocityY(-joystick.getLeftX() * (LeftBumperDriver.getAsBoolean() ? (MaxSpeed / 9) : (MaxSpeed / 2))) 
                 .withRotationalRate(-joystick.getRightX() * MaxAngularRate / 2) 
             ));
 
@@ -228,19 +231,19 @@ public class RobotContainer {
         // Elevator commands
         YButtonOp.onTrue(ElevatorSetHigh);
         YButtonOp.onTrue(CoralPositionDown);
-        YButtonOp.onFalse(CoralPositionStill); // Here for safety until tested - remove to allow press and release
+        //YButtonOp.onFalse(CoralPositionStill); // remove to allow press and release
 
         BButtonOp.onTrue(ElevatorSetMiddle);
         BButtonOp.onTrue(CoralPositionDown);
-        BButtonOp.onFalse(CoralPositionStill); // Here for safety until tested - remove to allow press and release
+        //BButtonOp.onFalse(CoralPositionStill); // remove to allow press and release
         
         AButtonOp.onTrue(ElevatorSetLowered);
         AButtonOp.onTrue(CoralPositionDown);
-        AButtonOp.onFalse(CoralPositionStill); // Here for safety until tested - remove to allow press and release
+        //AButtonOp.onFalse(CoralPositionStill); // remove to allow press and release
 
         XButtonOp.onTrue(ElevatorSetLowered);
         XButtonOp.onTrue(CoralPositionUp);
-        XButtonOp.onFalse(CoralPositionStill); // Here for safety until tested - remove to allow press and release
+        //XButtonOp.onFalse(CoralPositionStill); // remove to allow press and release
 
 
         // Coral commands
@@ -258,10 +261,18 @@ public class RobotContainer {
 
 
         // Algae commands
+        RightTriggerDriver.onTrue(AlgaePositionDown);
+        RightTriggerDriver.onTrue(AlgaeGrab);
+        RightTriggerDriver.onFalse(AlgaePositionMiddle);
+        RightTriggerDriver.onFalse(AlgaeStill);
+        
+
+        //RightBumperDriver.onTrue(AlgaePositionUp); // Commented out to remain in middle position
         RightBumperDriver.onTrue(AlgaeRelease);
         RightBumperDriver.onFalse(AlgaeStill);
 
         // Climb commands
+        StartButtonDriver.onTrue(AlgaePositionDown);
 
     }
 
@@ -289,70 +300,17 @@ public class RobotContainer {
 
     public void periodic() {
 
+        m_coral.ElevatorIsLowered(m_elevator.ElevatorLowered());
 
-        // algae functions - 
-        // NEED: RUN INTAKE LONGER AT PICKUP
 
-        // if (RightTriggerDriver.getAsBoolean()) {
-        //     m_algaePivot.algaePivotDown();
-        //     m_algae.IntakeAlgae();
-        // } else {
-        //     m_algaePivot.SetAlgaePivotMiddle();
-            
-        //     if (RightBumperDriver.getAsBoolean()) {
-        //         m_algae.ReleaseAlgae();
-        //     } else {
-        //         m_algae.Still();
-        //     }
-        
-            // algae functions for getting encoder values
-            // if (XButtonDriver.getAsBoolean()) {
-            // m_algaePivot.algaePivotDown();
-            // } else if (YButtonDriver.getAsBoolean()) {
-            // m_algaePivot.algaePivotUp();
-            // } else {
-            // m_algaePivot.algaePivotStill();
-            // }
-        //}
         
         if (LeftTriggerDriver.getAsBoolean()) {
             m_algaePivot.algaePivotUp();
             }
-         
-
-
-            // coral pivot testing functions
-        // if (RightTriggerOp.getAsBoolean()) {
-        //     //SmartDashboard.putBoolean("Right Trigger", true);
-        //     m_coralPivot.pivotDown();
-        //     } else if (RightBumperOp.getAsBoolean()) {
-        //         m_coralPivot.pivotUp();
-        //     } else {
-        //     //SmartDashboard.putBoolean("Right Trigger", false);
-        //         m_coralPivot.pivotStill();
-        //     }
-        
-            // coral functions
-        // if (LeftTriggerOp.getAsBoolean()) {
-        //         SmartDashboard.putBoolean("Coral Intake", false);
-        //         SmartDashboard.putBoolean("Coral Release", true);
-        //         m_coral.ReleaseCoral();
-        //     } else if (LeftBumperOp.getAsBoolean()) {
-        //         SmartDashboard.putBoolean("Coral Intake", true);
-        //         SmartDashboard.putBoolean("Coral Release", false);
-        //         m_coral.IntakeCoral();
-        //     } else {
-        //         SmartDashboard.putBoolean("Coral Intake", false);
-        //         SmartDashboard.putBoolean("Coral Release", false);
-        //         m_coral.Still();
-        //     }
-        
-      
+                
 
 
             // climb functions for testing
-
-        // commented out while sparks are disconnected
 
         // if (StartButtonDriver.getAsBoolean() && BackButtonDriver.getAsBoolean()) {
         //     m_climb.ClimbDown();
@@ -362,31 +320,9 @@ public class RobotContainer {
         //     m_climb.ClimbStill();
         // }
         
-            // elevator functions
-            // m_elevator.periodic();
-        // if (YButtonOp.getAsBoolean()) {
-        //     m_elevator.SetElevatorHigh();
-        //     m_coralPivot.pivotDown();
-        // } else if (AButtonOp.getAsBoolean()) {
-        //     m_elevator.SetElevatorLowered();
-        //     m_coralPivot.pivotDown();
-        // } else if (BButtonOp.getAsBoolean()) {
-        //     m_elevator.SetElevatorMiddle();
-        //     m_coralPivot.pivotDown();
-        // } else if (XButtonOp.getAsBoolean()) {
-        //     m_elevator.SetElevatorLowered();
-        //     m_coralPivot.pivotUp();
-        // }
+
     }
 
-    // Elevator Functions for Testing
-    // if (YButtonOp.getAsBoolean()) {
-    // m_elevator.ElevatorUp(.2);
-    // } else if (AButtonOp.getAsBoolean()) {
-    // m_elevator.ElevatorDown(-.2);
-    // } else {
-    // m_elevator.ElevatorStill();
-    // }
 
     public Command getAutonomousCommand() {
         // return Commands.print("No autonomous command configured");
