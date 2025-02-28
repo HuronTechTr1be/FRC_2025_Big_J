@@ -5,9 +5,63 @@
     "data": {
       "commands": [
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralGrab"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralStill"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralPositionDown"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Top_To_1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralRelease"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralStill"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralPositionScore"
           }
         },
         {
@@ -17,9 +71,57 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralGrab"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralStill"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralPositionDown"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "human_player_to_1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralRelease"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralStill"
           }
         }
       ]

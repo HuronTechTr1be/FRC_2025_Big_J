@@ -7,7 +7,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.0
+            "waitTime": 3.0
           }
         },
         {
@@ -35,12 +35,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "elevatorSetMiddle"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "Middle_To_1"
@@ -65,9 +59,21 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "CoralPositionScore"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "1_to_human_player"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
           }
         },
         {
@@ -86,6 +92,12 @@
           "type": "named",
           "data": {
             "name": "CoralStill"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralPositionDown"
           }
         },
         {

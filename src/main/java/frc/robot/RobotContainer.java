@@ -88,7 +88,7 @@ public class RobotContainer {
     private AlgaeSubsystem m_algae = new AlgaeSubsystem(61);
     private AlgaePivotSubsystem m_algaePivot = new AlgaePivotSubsystem(62);
 
-    //private ClimbSubsystem m_climb = new ClimbSubsystem();
+    private ClimbSubsystem m_climb = new ClimbSubsystem();
     private ElevatorSubsystem m_elevator = new ElevatorSubsystem();
 
     Trigger XButtonOp = operator.x();
@@ -110,6 +110,9 @@ public class RobotContainer {
     Trigger RightTriggerDriver = joystick.rightTrigger();
     Trigger StartButtonDriver = joystick.start();
     Trigger BackButtonDriver = joystick.back();
+    Trigger DpadLeftDriver = joystick.povLeft();
+    Trigger DpadRightDriver = joystick.povRight();
+
 
     ElevatorUpCommand elevatorUp = new ElevatorUpCommand(m_elevator);
     ElevatorDownCommand elevatorDown = new ElevatorDownCommand(m_elevator);
@@ -118,9 +121,9 @@ public class RobotContainer {
     ElevatorSetMiddleCommand ElevatorSetMiddle = new ElevatorSetMiddleCommand(m_elevator);
     ElevatorSetLoweredCommand ElevatorSetLowered = new ElevatorSetLoweredCommand(m_elevator);
 
-    // ClimbDownCommand climbDown = new ClimbDownCommand(m_climb);
-    // ClimbUpCommand climbUp = new ClimbUpCommand(m_climb);
-    // ClimbStillCommand climbStill = new ClimbStillCommand(m_climb);
+     ClimbDownCommand climbDown = new ClimbDownCommand(m_climb);
+     ClimbUpCommand climbUp = new ClimbUpCommand(m_climb);
+     ClimbStillCommand climbStill = new ClimbStillCommand(m_climb);
 
     CoralDownCommand CoralPositionDown = new CoralDownCommand(m_coralPivot);
     CoralUpCommand CoralPositionUp = new CoralUpCommand(m_coralPivot);
@@ -157,6 +160,11 @@ public class RobotContainer {
         NamedCommands.registerCommand("elevatorUp", elevatorUp);
         NamedCommands.registerCommand("elevatorDown", elevatorDown);
         NamedCommands.registerCommand("elevatorStill", elevatorStill);
+
+        NamedCommands.registerCommand("ElevatorSetHigh", ElevatorSetHigh);
+        NamedCommands.registerCommand("ElevatorSetMiddle", ElevatorSetMiddle);
+        NamedCommands.registerCommand("ElevatorSetLowered", ElevatorSetLowered);
+
 
         // NamedCommands.registerCommand("climbUp", climbUp);
         // NamedCommands.registerCommand("climbDown", climbDown);
@@ -244,6 +252,13 @@ public class RobotContainer {
         XButtonOp.onTrue(ElevatorSetLowered);
         XButtonOp.onTrue(CoralPositionUp);
         //XButtonOp.onFalse(CoralPositionStill); // remove to allow press and release
+
+        //Algea Knocker Downer
+        DpadRightDriver.onTrue(climbDown);
+        DpadRightDriver.onFalse(climbStill);
+
+        DpadLeftDriver.onTrue(climbUp);
+        DpadLeftDriver.onFalse(climbStill);
 
 
         // Coral commands

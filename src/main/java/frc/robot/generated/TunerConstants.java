@@ -305,7 +305,7 @@ public class TunerConstants {
 
         public static final double k_speedUpFactor = -0.4;
         public static final double k_speedDownFactor = 0.4;
-        public static final double k_pointLowered = 41;
+        public static final double k_pointLowered = 45;
 
     }
 
