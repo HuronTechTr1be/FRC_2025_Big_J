@@ -7,7 +7,25 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 3.0
+            "waitTime": 7.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralGrab"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralStill"
           }
         },
         {
@@ -17,21 +35,15 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "ElevatorSetMiddle"
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Straight Line"
+            "pathName": "OutTheWayPath"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "CoralRelease"
+            "name": "CoralSlowRelease"
           }
         },
         {

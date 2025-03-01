@@ -48,6 +48,7 @@ import frc.robot.Commands.AlgaeUpCommand;
 import frc.robot.Commands.AlgaeReleaseCommand;
 import frc.robot.Commands.AlgaeStillCommand;
 import frc.robot.Commands.CoralReleaseCommand;
+import frc.robot.Commands.CoralSoftReleaseCommand;
 import frc.robot.subsystems.AlgaePivotSubsystem;
 import frc.robot.subsystems.AlgaeSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
@@ -131,6 +132,7 @@ public class RobotContainer {
 
     CoralGrabCommand CoralGrab = new CoralGrabCommand(m_coral);
     CoralReleaseCommand CoralRelease = new CoralReleaseCommand(m_coral);
+    CoralSoftReleaseCommand CoralSoftRelease = new CoralSoftReleaseCommand(m_coral);
     CoralStillCommand CoralStill = new CoralStillCommand(m_coral);
 
 
@@ -177,6 +179,7 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("CoralGrab", CoralGrab);
         NamedCommands.registerCommand("CoralRelease", CoralRelease);
+        NamedCommands.registerCommand("CoralSoftRelease", CoralSoftRelease);
         NamedCommands.registerCommand("CoralStill", CoralStill);
 
         // Algae
@@ -214,7 +217,7 @@ public class RobotContainer {
             // Drive counterclockwise with negative X (left)
             drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * (LeftBumperDriver.getAsBoolean() ? (MaxSpeed / 9) : (MaxSpeed / 2))) 
                 .withVelocityY(-joystick.getLeftX() * (LeftBumperDriver.getAsBoolean() ? (MaxSpeed / 9) : (MaxSpeed / 2))) 
-                .withRotationalRate(-joystick.getRightX() * MaxAngularRate / 2) 
+                .withRotationalRate(-joystick.getRightX() * MaxAngularRate * .55) 
             ));
 
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
@@ -309,6 +312,8 @@ public class RobotContainer {
         }
     }
     SmartDashboard.putNumber("coral pivot", m_coralPivot.getPosition());
+    
+    m_coral.ElevatorIsLowered(m_elevator.ElevatorLowered());
 
 }
 

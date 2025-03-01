@@ -312,7 +312,7 @@ public class TunerConstants {
     public static final class CoralSubsystemConstants {
 
         public static final double k_intakeFactor = -0.2;
-        public static final double k_releaseFactor = 0.4;
+        public static final double k_releaseFactor = 0.3;
         public static final double k_releaseFactorLow = 0.15;
 
     }
