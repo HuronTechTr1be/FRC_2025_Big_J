@@ -215,8 +215,10 @@ public class RobotContainer {
             // Drive forward with negative Y (forward)
             // Drive left with negative X (left)
             // Drive counterclockwise with negative X (left)
-            drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * (LeftBumperDriver.getAsBoolean() ? (MaxSpeed / 9) : (MaxSpeed / 2))) 
-                .withVelocityY(-joystick.getLeftX() * (LeftBumperDriver.getAsBoolean() ? (MaxSpeed / 9) : (MaxSpeed / 2))) 
+            drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * (LeftBumperDriver.getAsBoolean() ? (MaxSpeed / 9) : (MaxSpeed * .72
+            ))) 
+                .withVelocityY(-joystick.getLeftX() * (LeftTriggerDriver.getAsBoolean() ? (MaxSpeed / 9) : (MaxSpeed * .72
+                ))) 
                 .withRotationalRate(-joystick.getRightX() * MaxAngularRate * .55) 
             ));
 
@@ -260,8 +262,8 @@ public class RobotContainer {
         DpadRightDriver.onTrue(climbDown);
         DpadRightDriver.onFalse(climbStill);
 
-        DpadLeftDriver.onTrue(climbUp);
-        DpadLeftDriver.onFalse(climbStill);
+        // DpadLeftDriver.onTrue(climbUp);
+        // DpadLeftDriver.onFalse(climbStill);
 
 
         // Coral commands
@@ -324,9 +326,9 @@ public class RobotContainer {
 
 
         
-        if (LeftTriggerDriver.getAsBoolean()) {
-            m_algaePivot.algaePivotUp();
-            }
+        // if (LeftTriggerDriver.getAsBoolean()) {
+        //     m_algaePivot.algaePivotUp();
+        //     }
                 
 
 
