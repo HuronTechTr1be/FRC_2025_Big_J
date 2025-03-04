@@ -31,13 +31,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Middle_To_2"
+            "pathName": "Middle_To_4"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "CoralRelease"
+            "name": "CoralSoftRelease"
           }
         },
         {
@@ -61,7 +61,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "2_to_human_player"
+            "pathName": "4_to_human_player"
           }
         },
         {
@@ -74,36 +74,6 @@
           "type": "named",
           "data": {
             "name": "CoralGrab"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "CoralStill"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "CoralPositionDown"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "human_player_to_2"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "CoralRelease"
           }
         },
         {

@@ -5,6 +5,36 @@
     "data": {
       "commands": [
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralGrab"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralStill"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralPositionDown"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Middle_To_1"
@@ -29,12 +59,6 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 3.0
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "CoralPositionScore"
@@ -47,6 +71,12 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "CoralGrab"
@@ -55,19 +85,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 3.0
+            "waitTime": 1.0
           }
         },
         {
           "type": "named",
           "data": {
             "name": "CoralStill"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 3.0
           }
         },
         {

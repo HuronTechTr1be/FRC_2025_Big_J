@@ -48,6 +48,7 @@ import frc.robot.Commands.AlgaeUpCommand;
 import frc.robot.Commands.AlgaeReleaseCommand;
 import frc.robot.Commands.AlgaeStillCommand;
 import frc.robot.Commands.CoralReleaseCommand;
+import frc.robot.Commands.CoralSoftReleaseCommand;
 import frc.robot.subsystems.AlgaePivotSubsystem;
 import frc.robot.subsystems.AlgaeSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
@@ -88,7 +89,7 @@ public class RobotContainer {
     private AlgaeSubsystem m_algae = new AlgaeSubsystem(61);
     private AlgaePivotSubsystem m_algaePivot = new AlgaePivotSubsystem(62);
 
-    //private ClimbSubsystem m_climb = new ClimbSubsystem();
+    private ClimbSubsystem m_climb = new ClimbSubsystem();
     private ElevatorSubsystem m_elevator = new ElevatorSubsystem();
 
     Trigger XButtonOp = operator.x();
@@ -110,6 +111,9 @@ public class RobotContainer {
     Trigger RightTriggerDriver = joystick.rightTrigger();
     Trigger StartButtonDriver = joystick.start();
     Trigger BackButtonDriver = joystick.back();
+    Trigger DpadLeftDriver = joystick.povLeft();
+    Trigger DpadRightDriver = joystick.povRight();
+
 
     ElevatorUpCommand elevatorUp = new ElevatorUpCommand(m_elevator);
     ElevatorDownCommand elevatorDown = new ElevatorDownCommand(m_elevator);
@@ -118,9 +122,9 @@ public class RobotContainer {
     ElevatorSetMiddleCommand ElevatorSetMiddle = new ElevatorSetMiddleCommand(m_elevator);
     ElevatorSetLoweredCommand ElevatorSetLowered = new ElevatorSetLoweredCommand(m_elevator);
 
-    // ClimbDownCommand climbDown = new ClimbDownCommand(m_climb);
-    // ClimbUpCommand climbUp = new ClimbUpCommand(m_climb);
-    // ClimbStillCommand climbStill = new ClimbStillCommand(m_climb);
+     ClimbDownCommand climbDown = new ClimbDownCommand(m_climb);
+     ClimbUpCommand climbUp = new ClimbUpCommand(m_climb);
+     ClimbStillCommand climbStill = new ClimbStillCommand(m_climb);
 
     CoralDownCommand CoralPositionDown = new CoralDownCommand(m_coralPivot);
     CoralUpCommand CoralPositionUp = new CoralUpCommand(m_coralPivot);
@@ -128,6 +132,7 @@ public class RobotContainer {
 
     CoralGrabCommand CoralGrab = new CoralGrabCommand(m_coral);
     CoralReleaseCommand CoralRelease = new CoralReleaseCommand(m_coral);
+    CoralSoftReleaseCommand CoralSoftRelease = new CoralSoftReleaseCommand(m_coral);
     CoralStillCommand CoralStill = new CoralStillCommand(m_coral);
 
 
@@ -158,6 +163,11 @@ public class RobotContainer {
         NamedCommands.registerCommand("elevatorDown", elevatorDown);
         NamedCommands.registerCommand("elevatorStill", elevatorStill);
 
+        NamedCommands.registerCommand("ElevatorSetHigh", ElevatorSetHigh);
+        NamedCommands.registerCommand("ElevatorSetMiddle", ElevatorSetMiddle);
+        NamedCommands.registerCommand("ElevatorSetLowered", ElevatorSetLowered);
+
+
         // NamedCommands.registerCommand("climbUp", climbUp);
         // NamedCommands.registerCommand("climbDown", climbDown);
         // NamedCommands.registerCommand("climbStill", climbStill);
@@ -169,6 +179,7 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("CoralGrab", CoralGrab);
         NamedCommands.registerCommand("CoralRelease", CoralRelease);
+        NamedCommands.registerCommand("CoralSoftRelease", CoralSoftRelease);
         NamedCommands.registerCommand("CoralStill", CoralStill);
 
         // Algae
@@ -204,9 +215,11 @@ public class RobotContainer {
             // Drive forward with negative Y (forward)
             // Drive left with negative X (left)
             // Drive counterclockwise with negative X (left)
-            drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * (LeftBumperDriver.getAsBoolean() ? (MaxSpeed / 9) : (MaxSpeed / 2))) 
-                .withVelocityY(-joystick.getLeftX() * (LeftBumperDriver.getAsBoolean() ? (MaxSpeed / 9) : (MaxSpeed / 2))) 
-                .withRotationalRate(-joystick.getRightX() * MaxAngularRate / 2) 
+            drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * (LeftBumperDriver.getAsBoolean() ? (MaxSpeed / 9) : (MaxSpeed * .72
+            ))) 
+                .withVelocityY(-joystick.getLeftX() * (LeftTriggerDriver.getAsBoolean() ? (MaxSpeed / 9) : (MaxSpeed * .72
+                ))) 
+                .withRotationalRate(-joystick.getRightX() * MaxAngularRate * .55) 
             ));
 
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
@@ -244,6 +257,13 @@ public class RobotContainer {
         XButtonOp.onTrue(ElevatorSetLowered);
         XButtonOp.onTrue(CoralPositionUp);
         //XButtonOp.onFalse(CoralPositionStill); // remove to allow press and release
+
+        //Algea Knocker Downer
+        DpadRightDriver.onTrue(climbDown);
+        DpadRightDriver.onFalse(climbStill);
+
+        // DpadLeftDriver.onTrue(climbUp);
+        // DpadLeftDriver.onFalse(climbStill);
 
 
         // Coral commands
@@ -294,6 +314,8 @@ public class RobotContainer {
         }
     }
     SmartDashboard.putNumber("coral pivot", m_coralPivot.getPosition());
+    
+    m_coral.ElevatorIsLowered(m_elevator.ElevatorLowered());
 
 }
 
@@ -304,9 +326,9 @@ public class RobotContainer {
 
 
         
-        if (LeftTriggerDriver.getAsBoolean()) {
-            m_algaePivot.algaePivotUp();
-            }
+        // if (LeftTriggerDriver.getAsBoolean()) {
+        //     m_algaePivot.algaePivotUp();
+        //     }
                 
 
 

@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.generated.TunerConstants.CoralSubsystemConstants;
 
@@ -19,6 +21,7 @@ public class CoralSubsystem extends SubsystemBase {
 
     public void ElevatorIsLowered(boolean lowered) {
         m_lowered = lowered;
+        SmartDashboard.putBoolean("Coral says elevator lowered", m_lowered);
     }
 
     public void IntakeCoral() {

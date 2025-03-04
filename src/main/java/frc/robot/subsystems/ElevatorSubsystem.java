@@ -49,8 +49,6 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     private void UpdateDashboard() {
-
-        SmartDashboard.putBoolean("Elevator Find Home", m_findHome);
         SmartDashboard.putBoolean("Elevator Lowered", atLowerLimit());
         SmartDashboard.putBoolean("Elevator Raised", atUpperLimit());
         SmartDashboard.putNumber("Elevator Left Position", m_elevatorLeft.getPosition());

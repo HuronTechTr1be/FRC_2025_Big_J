@@ -31,7 +31,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Middle_To_2"
+            "pathName": "Middle_To_4"
           }
         },
         {
@@ -61,7 +61,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "2_to_human_player"
+            "pathName": "4_to_human_player"
           }
         },
         {
@@ -97,7 +97,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "human_player_to_2"
+            "pathName": "human_player_to_4"
           }
         },
         {

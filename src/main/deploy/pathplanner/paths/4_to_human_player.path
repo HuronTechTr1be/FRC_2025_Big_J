@@ -3,41 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.5,
-        "y": 6.9
+        "x": 5.275,
+        "y": 2.998
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.73311589160427,
-        "y": 6.990316006784767
+        "x": 4.237926136363637,
+        "y": 1.272840909085923
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.5,
-        "y": 6.9
+        "x": 1.533,
+        "y": 0.644
       },
       "prevControl": {
-        "x": 6.368209759283947,
-        "y": 6.687558637614977
+        "x": 3.340482954545455,
+        "y": 1.5321022727222875
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": 180.0
-    },
-    {
-      "waypointRelativePos": 0.7541091387245197,
-      "rotationDegrees": -90.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -51,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -127.00000000000001
   },
   "reversed": false,
-  "folder": null,
+  "folder": "to_human_player",
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": 0.0
+    "velocity": 0.0,
+    "rotation": 119.99999999999999
   },
   "useDefaultConstraints": true
 }
