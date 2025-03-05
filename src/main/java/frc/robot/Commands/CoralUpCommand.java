@@ -21,7 +21,7 @@ public class CoralUpCommand extends Command {
     @Override
     public void initialize() {
 
-        m_coralPosition.pivotUp();
+        m_coralPosition.goUp();
         //m_coralPosition.SetPivotRaised();
     }
 
