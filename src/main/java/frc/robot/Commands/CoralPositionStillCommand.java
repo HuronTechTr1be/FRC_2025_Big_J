@@ -18,7 +18,7 @@ public class CoralPositionStillCommand extends Command {
     @Override
     public void initialize() {
 
-        m_coralPosition.pivotStill();
+        m_coralPosition.goStill();
 
     }
 

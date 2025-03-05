@@ -18,7 +18,7 @@ public class CoralDownCommand extends Command {
     @Override
     public void initialize() {
 
-        m_coralPosition.pivotDown();
+        m_coralPosition.goDown();
         //m_coralPosition.SetPivotLowered();        
     }
 

@@ -89,7 +89,7 @@ public class RobotContainer {
     private AlgaeSubsystem m_algae = new AlgaeSubsystem(61);
     private AlgaePivotSubsystem m_algaePivot = new AlgaePivotSubsystem(62);
 
-    private ClimbSubsystem m_climb = new ClimbSubsystem();
+    //private ClimbSubsystem m_climb = new ClimbSubsystem();
     private ElevatorSubsystem m_elevator = new ElevatorSubsystem();
 
     Trigger XButtonOp = operator.x();
@@ -122,9 +122,9 @@ public class RobotContainer {
     ElevatorSetMiddleCommand ElevatorSetMiddle = new ElevatorSetMiddleCommand(m_elevator);
     ElevatorSetLoweredCommand ElevatorSetLowered = new ElevatorSetLoweredCommand(m_elevator);
 
-     ClimbDownCommand climbDown = new ClimbDownCommand(m_climb);
-     ClimbUpCommand climbUp = new ClimbUpCommand(m_climb);
-     ClimbStillCommand climbStill = new ClimbStillCommand(m_climb);
+    //ClimbDownCommand climbDown = new ClimbDownCommand(m_climb);
+    //ClimbUpCommand climbUp = new ClimbUpCommand(m_climb);
+    //ClimbStillCommand climbStill = new ClimbStillCommand(m_climb);
 
     CoralDownCommand CoralPositionDown = new CoralDownCommand(m_coralPivot);
     CoralUpCommand CoralPositionUp = new CoralUpCommand(m_coralPivot);
@@ -205,7 +205,14 @@ public class RobotContainer {
         configureBindings();
     }
 
-    public double slowDownFactor;
+    private double SpeedHigh = MaxSpeed * 0.72;
+    private double SpeedLow = MaxSpeed * 0.11;
+    private double RotationHigh = MaxAngularRate * 0.55;
+    private double RotationLow = MaxAngularRate * 0.25;
+
+    private double EffectiveSpeed() {
+        return (LeftTriggerDriver.getAsBoolean() ? SpeedLow : SpeedHigh);
+    }
 
     private void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
@@ -215,11 +222,9 @@ public class RobotContainer {
             // Drive forward with negative Y (forward)
             // Drive left with negative X (left)
             // Drive counterclockwise with negative X (left)
-            drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * (LeftBumperDriver.getAsBoolean() ? (MaxSpeed / 9) : (MaxSpeed * .72
-            ))) 
-                .withVelocityY(-joystick.getLeftX() * (LeftTriggerDriver.getAsBoolean() ? (MaxSpeed / 9) : (MaxSpeed * .72
-                ))) 
-                .withRotationalRate(-joystick.getRightX() * MaxAngularRate * .55) 
+            drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * EffectiveSpeed()) 
+                .withVelocityY(-joystick.getLeftX() * EffectiveSpeed()) 
+                .withRotationalRate(-joystick.getRightX() * RotationHigh) 
             ));
 
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
@@ -258,12 +263,13 @@ public class RobotContainer {
         XButtonOp.onTrue(CoralPositionUp);
         //XButtonOp.onFalse(CoralPositionStill); // remove to allow press and release
 
-        //Algea Knocker Downer
-        DpadRightDriver.onTrue(climbDown);
-        DpadRightDriver.onFalse(climbStill);
 
-        // DpadLeftDriver.onTrue(climbUp);
-        // DpadLeftDriver.onFalse(climbStill);
+        //Algea Knocker Downer
+        //DpadRightDriver.onTrue(climbDown);
+        //DpadRightDriver.onFalse(climbStill);
+
+        //DpadLeftDriver.onTrue(climbUp);
+        //DpadLeftDriver.onFalse(climbStill);
 
 
         // Coral commands
@@ -292,32 +298,32 @@ public class RobotContainer {
         RightBumperDriver.onFalse(AlgaeStill);
 
         // Climb commands
-        StartButtonDriver.onTrue(AlgaePositionDown);
+        //StartButtonDriver.onTrue(AlgaePositionDown);
 
     }
 
     public void autonPeriodic(){
-        if(m_coralPivot.isLowered()){
-        if(m_coralPivot.goingUp()){
-            
+        if(m_coralPivot.atLimitLow()){
+            if(m_coralPivot.goingUp()){
+                
+            }
+            else{
+                m_coralPivot.goStill();
+            }
         }
-        else{
-            m_coralPivot.pivotStill();
+        if(m_coralPivot.atLimitHigh()){
+            if(m_coralPivot.goingDown()){
+                
+            }
+            else{
+                m_coralPivot.goStill();
+            }
         }
-    }
-    if(m_coralPivot.isRaised()){
-        if(m_coralPivot.goingDown()){
-            
-        }
-        else{
-            m_coralPivot.pivotStill();
-        }
-    }
-    SmartDashboard.putNumber("coral pivot", m_coralPivot.getPosition());
-    
-    m_coral.ElevatorIsLowered(m_elevator.ElevatorLowered());
+        SmartDashboard.putNumber("coral pivot", m_coralPivot.getPosition());
+        
+        m_coral.ElevatorIsLowered(m_elevator.ElevatorLowered());
 
-}
+    }
 
 
     public void periodic() {
