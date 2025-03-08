@@ -292,9 +292,9 @@ public class TunerConstants {
     public static final class ElevatorSubsystemConstants {
 
         // placeholders, must change
-        public static final double k_ElevatorSpeedUp = 0.5;
-        public static final double k_ElevatorSpeedDown = -0.5;
-        public static final double k_ElevatorSpeedDownSlow = -0.2;
+        public static final double k_ElevatorSpeedUp = 0.3;     //0.5;
+        public static final double k_ElevatorSpeedDown = -0.3;  //-0.5;
+        public static final double k_ElevatorSpeedDownSlow = -0.2;      //-0.2;
         public static final double k_PointRaised = 81;
         public static final double k_PointMiddle = 13;
         public static final double k_PointLow = 10;
@@ -305,7 +305,16 @@ public class TunerConstants {
 
         public static final double k_speedUpFactor = -0.4;
         public static final double k_speedDownFactor = 0.4;
-        public static final double k_pointLowered = 45;
+        public static final double k_pointMiddle = 15;
+        public static final double k_pointLowered = 100;
+
+    }
+
+    public static final class CoralRotateSubsystemConstants {
+
+        public static final double k_speedUpFactor = 0.1;
+        public static final double k_speedDownFactor = -0.1;
+        public static final double k_pointRaised = 32;
 
     }
 

@@ -16,7 +16,7 @@ public class CoralStillCommand extends Command {
 
     @Override
     public void initialize() {
-        m_coral.Still();
+        m_coral.goStill();
     }
 
     @Override

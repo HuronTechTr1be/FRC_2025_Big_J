@@ -20,7 +20,7 @@ public class AlgaeMiddleCommand extends Command {
     @Override
     public void initialize() {
 
-        m_algaePosition.SetAlgaePivotMiddle();
+        m_algaePosition.gotoMiddle();
 
     }
 

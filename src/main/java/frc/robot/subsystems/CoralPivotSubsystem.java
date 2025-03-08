@@ -1,13 +1,15 @@
 package frc.robot.subsystems;
+import frc.robot.generated.TunerConstants.AlgaePivotSubsystemConstants;
+import frc.robot.generated.TunerConstants.CoralPivotSubsystemConstants;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import frc.robot.generated.TunerConstants.CoralPivotSubsystemConstants;
-
 // motor 22
 public final class CoralPivotSubsystem extends SuperClassMotor {
+
+    private String m_target = new String();
 
     // private ShuffleboardTab coralTab = Shuffleboard.getTab("Coral");
 
@@ -34,18 +36,20 @@ public final class CoralPivotSubsystem extends SuperClassMotor {
         }
 
         return done;
+        //return true;    //skip for testing
     }
 
     @Override
     public boolean atRest() {
         
-        boolean done = atLimitLow();
+        boolean done = atMiddle();
 
         if (done == false) {
-            goDownSlow();
+            gotoMiddle();
         }
 
         return done;
+        //return true;    //skip for testing
     }
 
 
@@ -81,19 +85,42 @@ public final class CoralPivotSubsystem extends SuperClassMotor {
     }
 
 
-    // private void UpdateDashboard() {
+    @Override
+    public void goStill() {
 
-    //     SmartDashboard.putNumber("Coral Position", getPosition());
-    //     SmartDashboard.putBoolean("Coral Raised", isRaised());
-    //     SmartDashboard.putBoolean("Coral Lowered", isLowered());
-    //     SmartDashboard.putBoolean("Coral Find Home", m_findHome);
-    //     SmartDashboard.putBoolean("Coral Find Low", m_findLow);
-    // }
+        m_target = "";
+        super.goStill();
 
-    // public void periodic() {
+    }
 
-    //     UpdateDashboard();
 
-    // }
+    public boolean atMiddle() {
+        return (Math.abs(getPosition() - CoralPivotSubsystemConstants.k_pointMiddle) < 1.5);
+    }
+
+    public void gotoMiddle() {
+
+        m_target = "Middle";
+
+        if (atMiddle()) {
+            goStill();
+        } else if (getPosition() < CoralPivotSubsystemConstants.k_pointMiddle) {
+            goDown();
+        } else if (getPosition() > CoralPivotSubsystemConstants.k_pointMiddle) {
+            goUp();
+        }
+    }
+
+
+    @Override
+    public void periodic() {
+
+        super.periodic();
+
+        if (atMiddle() && (m_target == "Middle")) {
+            goStill();
+        }
+
+    }
 
 }

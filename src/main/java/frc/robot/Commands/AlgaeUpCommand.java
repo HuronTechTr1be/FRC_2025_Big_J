@@ -20,7 +20,7 @@ public class AlgaeUpCommand extends Command {
     @Override
     public void initialize() {
 
-        m_algaePosition.algaePivotUp();
+        m_algaePosition.goUp();
 
     }
 
