@@ -19,7 +19,11 @@ public class ElevatorSubsystem extends SubsystemBase {
 
         m_elevatorLeft = new ElevatorBasic(31, "ElevatorLeft", true, false);
         m_elevatorRight = new ElevatorBasic(32, "ElevatorRight",false,true);
-        gotoZeroInit();
+
+        //gotoZeroInit();   // comment this out to skip the automatic homing process
+        m_elevatorLeft.setPositionZero();   // in lieu of automatic homing, just set position to zero
+        m_elevatorRight.setPositionZero();  // in lieu of automatic homing, just set position to zero
+
     }
 
     public void gotoZeroInit() {

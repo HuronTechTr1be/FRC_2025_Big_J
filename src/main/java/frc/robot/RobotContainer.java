@@ -30,6 +30,7 @@ import frc.robot.Commands.ClimbDownCommand;
 import frc.robot.Commands.ClimbStillCommand;
 import frc.robot.Commands.ClimbUpCommand;
 import frc.robot.Commands.ElevatorDownCommand;
+import frc.robot.Commands.ElevatorResetCommand;
 import frc.robot.Commands.ElevatorSetHighCommand;
 import frc.robot.Commands.ElevatorSetLoweredCommand;
 import frc.robot.Commands.ElevatorSetMiddleCommand;
@@ -37,18 +38,21 @@ import frc.robot.Commands.ElevatorStillCommand;
 import frc.robot.Commands.ElevatorUpCommand;
 import frc.robot.Commands.AlgaeGrabCommand;
 import frc.robot.Commands.CoralGrabCommand;
+import frc.robot.Commands.CoralPositionResetCommand;
 import frc.robot.Commands.CoralDownCommand;
 import frc.robot.Commands.CoralUpCommand;
 import frc.robot.Commands.CoralStillCommand;
 import frc.robot.Commands.CoralPositionStillCommand;
 import frc.robot.Commands.AlgaeDownCommand;
 import frc.robot.Commands.AlgaeMiddleCommand;
+import frc.robot.Commands.AlgaePositionResetCommand;
 import frc.robot.Commands.AlgaePositionStillCommand;
 import frc.robot.Commands.AlgaeUpCommand;
 import frc.robot.Commands.AlgaeReleaseCommand;
 import frc.robot.Commands.AlgaeStillCommand;
 import frc.robot.Commands.CoralReleaseCommand;
 import frc.robot.Commands.CoralRotateDownCommand;
+import frc.robot.Commands.CoralRotateResetCommand;
 import frc.robot.Commands.CoralRotateStillCommand;
 import frc.robot.Commands.CoralRotateUpCommand;
 import frc.robot.Commands.CoralSoftReleaseCommand;
@@ -130,6 +134,7 @@ public class RobotContainer {
     ElevatorSetHighCommand ElevatorSetHigh = new ElevatorSetHighCommand(m_elevator);
     ElevatorSetMiddleCommand ElevatorSetMiddle = new ElevatorSetMiddleCommand(m_elevator);
     ElevatorSetLoweredCommand ElevatorSetLowered = new ElevatorSetLoweredCommand(m_elevator);
+    ElevatorResetCommand elevatorReset = new ElevatorResetCommand(m_elevator);
 
     //ClimbDownCommand climbDown = new ClimbDownCommand(m_climb);
     //ClimbUpCommand climbUp = new ClimbUpCommand(m_climb);
@@ -138,10 +143,12 @@ public class RobotContainer {
     CoralDownCommand CoralPositionDown = new CoralDownCommand(m_coralPivot);
     CoralUpCommand CoralPositionUp = new CoralUpCommand(m_coralPivot);
     CoralPositionStillCommand CoralPositionStill = new CoralPositionStillCommand(m_coralPivot);
+    CoralPositionResetCommand coralPositionReset = new CoralPositionResetCommand(m_coralPivot);
 
     CoralRotateUpCommand CoralRotateUp = new CoralRotateUpCommand(m_coralRotate);
     CoralRotateDownCommand CoralRotateDown = new CoralRotateDownCommand(m_coralRotate);
     CoralRotateStillCommand CoralRotateStill = new CoralRotateStillCommand(m_coralRotate);
+    CoralRotateResetCommand coralRotateReset = new CoralRotateResetCommand(m_coralRotate);
 
     CoralGrabCommand CoralGrab = new CoralGrabCommand(m_coral);
     CoralReleaseCommand CoralRelease = new CoralReleaseCommand(m_coral);
@@ -153,6 +160,7 @@ public class RobotContainer {
     AlgaeMiddleCommand AlgaePositionMiddle = new AlgaeMiddleCommand(m_algaePivot);
     AlgaeUpCommand AlgaePositionUp = new AlgaeUpCommand(m_algaePivot);
     AlgaePositionStillCommand AlgaePositionStill = new AlgaePositionStillCommand(m_algaePivot);
+    AlgaePositionResetCommand algaePositionReset = new AlgaePositionResetCommand(m_algaePivot);
 
     AlgaeGrabCommand AlgaeGrab = new AlgaeGrabCommand(m_algae, m_algaePivot);
     AlgaeReleaseCommand AlgaeRelease = new AlgaeReleaseCommand(m_algae);
@@ -286,6 +294,10 @@ public class RobotContainer {
         DpadDownOp.onTrue(elevatorDown);
         DpadDownOp.onFalse(elevatorStill);
 
+        StartButtonDriver.onTrue(elevatorReset);
+        StartButtonDriver.onTrue(coralPositionReset);
+        StartButtonDriver.onTrue(coralRotateReset);
+        StartButtonDriver.onTrue(algaePositionReset);
 
         //Algea Knocker Downer
         //DpadRightDriver.onTrue(climbDown);

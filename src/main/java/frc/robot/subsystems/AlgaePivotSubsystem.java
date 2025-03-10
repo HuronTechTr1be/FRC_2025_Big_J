@@ -10,7 +10,8 @@ public final class AlgaePivotSubsystem extends SuperClassMotor {
 
         super(deviceId, "AlgaePivot");
 
-        gotoZeroInit();
+        //gotoZeroInit();   // comment this out to skip the automatic homing process
+        setPositionZero();  // in lieu of automatic homing, just set position to zero
     }
 
 
@@ -44,6 +45,7 @@ public final class AlgaePivotSubsystem extends SuperClassMotor {
     @Override
     public boolean atLimitHigh() {
         return m_limitSwitch.isPressed();
+        //return ((getPosition() <= 1) || m_limitSwitch.isPressed());
     }
 
     @Override
