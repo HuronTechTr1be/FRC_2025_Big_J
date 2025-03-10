@@ -18,7 +18,8 @@ public final class CoralRotateSubsystem extends SuperClassMotor {
         // coralTab.addBoolean("Coral Raised", () -> isRaised());
         // coralTab.addBoolean("Coral Lowered", () -> isLowered());
 
-        gotoZeroInit();
+        //gotoZeroInit();   // comment this out to skip the automatic homing process
+        setPositionZero();  // in lieu of automatic homing, just set position to zero
 
     }
 
@@ -58,6 +59,7 @@ public final class CoralRotateSubsystem extends SuperClassMotor {
     @Override
     public boolean atLimitLow() {
         return m_limitSwitch.isPressed();
+        //return ((getPosition() <= 1) || m_limitSwitch.isPressed());
     }
 
 

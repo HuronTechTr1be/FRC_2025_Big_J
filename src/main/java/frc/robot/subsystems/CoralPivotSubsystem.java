@@ -21,7 +21,8 @@ public final class CoralPivotSubsystem extends SuperClassMotor {
         // coralTab.addBoolean("Coral Raised", () -> isRaised());
         // coralTab.addBoolean("Coral Lowered", () -> isLowered());
 
-        gotoZeroInit();
+        //gotoZeroInit();   // comment this out to skip the automatic homing process
+        setPositionZero();  // in lieu of automatic homing, just set position to zero
 
     }
 
@@ -42,20 +43,21 @@ public final class CoralPivotSubsystem extends SuperClassMotor {
     @Override
     public boolean atRest() {
         
-        boolean done = atMiddle();
+        // boolean done = atMiddle();
 
-        if (done == false) {
-            gotoMiddle();
-        }
+        // if (done == false) {
+        //     gotoMiddle();
+        // }
 
-        return done;
-        //return true;    //skip for testing
+        // return done;
+        return true;    //skip for testing
     }
 
 
     @Override
     public boolean atLimitHigh() {
         return m_limitSwitch.isPressed();
+        //return ((getPosition() <= 1) || m_limitSwitch.isPressed());
     }
 
     @Override
