@@ -16,7 +16,7 @@ public class CoralSoftReleaseCommand extends Command {
 
     @Override
     public void initialize() {
-        m_coral.ReleaseCoral(.15);
+        m_coral.ReleaseCoral();
     }
 
     @Override

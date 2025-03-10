@@ -1,60 +1,64 @@
 package frc.robot.subsystems;
-
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.SparkMax;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.generated.TunerConstants.CoralSubsystemConstants;
 
 // motor 21
-public class CoralSubsystem extends SubsystemBase {
-
-    private SparkMax coral;
-    private boolean m_lowered;
+public final class CoralSubsystem extends SuperClassMotor {
 
     public CoralSubsystem(int deviceId) {
 
-        coral = new SparkMax(deviceId, MotorType.kBrushless);
+        super(deviceId, "CoralGripper");
 
     }
 
-    public void ElevatorIsLowered(boolean lowered) {
-        m_lowered = lowered;
-        SmartDashboard.putBoolean("Coral says elevator lowered", m_lowered);
+    @Override
+    public boolean atZero() {
+        return true;    // No Zero exists
     }
+
+    @Override
+    public boolean atRest() {
+        return true;    // No AtRest exists
+    }
+
+
+    @Override
+    public boolean atLimitHigh() {
+        return false;   // No limit exists
+    }
+
+    @Override
+    public boolean atLimitLow() {
+        return false;   // No limit exists
+    }
+
+
+    @Override
+    public double speedUpFast() {
+        return CoralSubsystemConstants.k_intakeFactor;
+    }
+
+    @Override
+    public double speedUpSlow() {
+        return CoralSubsystemConstants.k_intakeFactor;
+    }
+
+    @Override
+    public double speedDownFast() {
+        return CoralSubsystemConstants.k_releaseFactor;
+    }
+
+    @Override
+    public double speedDownSlow() {
+        return CoralSubsystemConstants.k_releaseFactorLow;
+    }
+
 
     public void IntakeCoral() {
-
-        coral.set(CoralSubsystemConstants.k_intakeFactor);
-    }
-
-    public void Intakecoral(double speed) {
-        speed = -(Math.abs(speed));
-        coral.set(speed);
+        goUp();
     }
 
     public void ReleaseCoral() {
-
-        if (m_lowered) {
-            coral.set(CoralSubsystemConstants.k_releaseFactorLow);
-        } else {
-            coral.set(CoralSubsystemConstants.k_releaseFactor);
-        }
-
+        goDown();
     }
 
-    public void ReleaseCoral(double speed) {
-
-        speed = Math.abs(speed);
-
-        coral.set(speed);
-
-    }
-
-    public void Still() {
-
-        coral.set(0);
-
-    }
 }

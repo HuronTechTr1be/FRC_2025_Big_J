@@ -25,7 +25,7 @@ public class ClimbSubsystem extends SubsystemBase {
 
 //        m_climbLeft = new ClimbPivotSubsystem(51, "left");
 //        m_climbRight = new ClimbPivotSubsystem(52, "right");
-        m_climbWinch = new ClimbWinchSubsystem(51);
+//        m_climbWinch = new ClimbWinchSubsystem(51);
 //        SetZeroInit();
 
     }

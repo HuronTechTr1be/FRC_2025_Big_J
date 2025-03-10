@@ -16,7 +16,7 @@ public class AlgaeStillCommand extends Command {
 
     @Override
     public void initialize() {
-        m_algae.Still();
+        m_algae.goStill();
     }
 
     @Override

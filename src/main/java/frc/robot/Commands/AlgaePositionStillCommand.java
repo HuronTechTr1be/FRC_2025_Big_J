@@ -17,7 +17,7 @@ public class AlgaePositionStillCommand extends Command {
     @Override
     public void initialize() {
 
-        m_algaePosition.algaePivotStill();
+        m_algaePosition.goStill();
 
     }
 

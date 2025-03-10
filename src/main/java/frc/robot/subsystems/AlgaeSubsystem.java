@@ -1,48 +1,64 @@
 package frc.robot.subsystems;
-
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.SparkMax;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.generated.TunerConstants.AlgaeSubsystemConstants;
 
 // motor 61
-public class AlgaeSubsystem extends SubsystemBase {
-
-    private SparkMax algae;
+public final class AlgaeSubsystem extends SuperClassMotor {
 
     public AlgaeSubsystem(int deviceId) {
 
-        algae = new SparkMax(deviceId, MotorType.kBrushless);
+        super(deviceId, "AlgaeGripper");
 
     }
 
+    @Override
+    public boolean atZero() {
+        return true;    // No Zero exists
+    }
+
+    @Override
+    public boolean atRest() {
+        return true;    // No AtRest exists
+    }
+
+
+    @Override
+    public boolean atLimitHigh() {
+        return false;   // No limit exists
+    }
+
+    @Override
+    public boolean atLimitLow() {
+        return false;   // No limit exists
+    }
+
+
+    @Override
+    public double speedUpFast() {
+        return AlgaeSubsystemConstants.k_intakeFactor;
+    }
+
+    @Override
+    public double speedUpSlow() {
+        return AlgaeSubsystemConstants.k_intakeFactor;
+    }
+
+    @Override
+    public double speedDownFast() {
+        return AlgaeSubsystemConstants.k_releaseFactor;
+    }
+
+    @Override
+    public double speedDownSlow() {
+        return AlgaeSubsystemConstants.k_releaseFactor;
+    }
+
+    
     public void IntakeAlgae() {
-
-        algae.set(AlgaeSubsystemConstants.k_intakeFactor);
-
-    }
-
-    public void IntakeAlgae(double speed) {
-        speed = -(Math.abs(speed));
-        algae.set(speed);
+        goUp();
     }
 
     public void ReleaseAlgae() {
-
-        algae.set(AlgaeSubsystemConstants.k_releaseFactor);
-
+        goDown();
     }
 
-    public void ReleaseAlgae(double speed) {
-
-        speed = Math.abs(speed);
-        algae.set(speed);
-
-    }
-
-    public void Still() {
-
-        algae.set(0);
-
-    }
 }

@@ -10,41 +10,41 @@ public class ElevatorSubsystem extends SubsystemBase {
     // left and right
     private ElevatorBasic m_elevatorLeft;
     private ElevatorBasic m_elevatorRight;
-    private boolean m_findHome;
+    private boolean m_findZero;
     private boolean m_movingDown = false;
     private boolean m_movingUp = false;
     private String m_target = new String();
 
     public ElevatorSubsystem() {
 
-        m_elevatorLeft = new ElevatorBasic(31, "left");
-        m_elevatorRight = new ElevatorBasic(32, "right");
-        SetZeroInit();
+        m_elevatorLeft = new ElevatorBasic(31, "ElevatorLeft", true, false);
+        m_elevatorRight = new ElevatorBasic(32, "ElevatorRight",false,true);
+        gotoZeroInit();
     }
 
-    public void SetZeroInit() {
+    public void gotoZeroInit() {
 
-        m_findHome = true;
-        m_elevatorLeft.setZero();
-        m_elevatorRight.setZero();
+        m_findZero = true;
+        m_elevatorLeft.setPositionZero();
+        m_elevatorRight.setPositionZero();
 
         if (atLowerLimit() == false) {
-            ElevatorDown(ElevatorSubsystemConstants.k_ElevatorSpeedDownSlow);
+            ElevatorDown();
         } else {
-            m_findHome = false;
+            m_findZero = false;
         }
     }
 
-    private void SetZeroFinish() {
+    private void gotoZeroFinish() {
 
         ElevatorDown();
 
         if (atLowerLimit()) {
             ElevatorStill();
-            m_elevatorLeft.setZero();
-            m_elevatorRight.setZero();
+            m_elevatorLeft.setPositionZero();
+            m_elevatorRight.setPositionZero();
 
-            m_findHome = false;
+            m_findZero = false;
         }
     }
 
@@ -57,13 +57,13 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public void periodic() {
 
-        if (m_findHome) {
-            SetZeroFinish();
+        if (m_findZero) {
+            gotoZeroFinish();
         }
 
         if (ElevatorLowered()) {
-            m_elevatorLeft.setZero();
-            m_elevatorRight.setZero();
+            m_elevatorLeft.setPositionZero();
+            m_elevatorRight.setPositionZero();
             if (m_target == "Lowered") {
                 ElevatorStill();
             }
@@ -84,12 +84,6 @@ public class ElevatorSubsystem extends SubsystemBase {
                 ElevatorStill();
             }
         }
-
-        // redundant now I think - was this causing the jumping on and off issue?
-        // if ((atLowerLimit() && m_movingUp == false) || (atUpperLimit() &&
-        // m_movingDown == false)) {
-        // ElevatorStill();
-        // }
 
         m_elevatorRight.periodic();
         m_elevatorLeft.periodic();
@@ -127,59 +121,59 @@ public class ElevatorSubsystem extends SubsystemBase {
         return (Math.abs(getPosition() - ElevatorSubsystemConstants.k_PointLow) < 3);
     }
 
-    public void ElevatorDown(double speed) {
+    // public void ElevatorDown(double speed) {
 
-        m_movingDown = true;
+    //     m_movingDown = true;
 
-        if (ElevatorLowered()) {
-            m_elevatorLeft.Still();
-            m_elevatorRight.Still();
-        } else {
-            m_elevatorLeft.Down(speed);
-            m_elevatorRight.Down(speed);
-            m_movingDown = true;
+    //     if (ElevatorLowered()) {
+    //         m_elevatorLeft.goStill();
+    //         m_elevatorRight.goStill();
+    //     } else {
+    //         m_elevatorLeft.goDown(speed);
+    //         m_elevatorRight.goDown(speed);
+    //         m_movingDown = true;
 
-        }
+    //     }
 
-    }
+    // }
 
     public void ElevatorDown() {
 
         m_movingDown = true;
 
         if (ElevatorLowered()) {
-            m_elevatorLeft.Still();
-            m_elevatorRight.Still();
+            m_elevatorLeft.goStill();
+            m_elevatorRight.goStill();
         } else {
-            m_elevatorLeft.Down();
-            m_elevatorRight.Down();
+            m_elevatorLeft.goDown();
+            m_elevatorRight.goDown();
             m_movingDown = true;
 
         }
 
     }
 
-    public void ElevatorUp(double speed) {
+    // public void ElevatorUp(double speed) {
 
-        if (ElevatorRaised()) {
-            m_elevatorLeft.Still();
-            m_elevatorRight.Still();
-        } else {
-            m_elevatorLeft.Up(speed);
-            m_elevatorRight.Up(speed);
-            m_movingUp = true;
+    //     if (ElevatorRaised()) {
+    //         m_elevatorLeft.Still();
+    //         m_elevatorRight.Still();
+    //     } else {
+    //         m_elevatorLeft.Up(speed);
+    //         m_elevatorRight.Up(speed);
+    //         m_movingUp = true;
 
-        }
+    //     }
 
-    }
+    // }
 
     public void ElevatorUp() {
         if (ElevatorRaised()) {
-            m_elevatorLeft.Still();
-            m_elevatorRight.Still();
+            m_elevatorLeft.goStill();
+            m_elevatorRight.goStill();
         } else {
-            m_elevatorLeft.Up();
-            m_elevatorRight.Up();
+            m_elevatorLeft.goUp();
+            m_elevatorRight.goUp();
             m_movingUp = true;
 
         }
@@ -187,8 +181,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public void ElevatorStill() {
-        m_elevatorLeft.Still();
-        m_elevatorRight.Still();
+        m_elevatorLeft.goStill();
+        m_elevatorRight.goStill();
 
         m_target = "";
         m_movingDown = false;
