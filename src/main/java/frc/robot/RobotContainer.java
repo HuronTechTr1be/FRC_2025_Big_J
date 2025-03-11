@@ -36,6 +36,7 @@ import frc.robot.Commands.ElevatorSetLoweredCommand;
 import frc.robot.Commands.ElevatorSetMiddleCommand;
 import frc.robot.Commands.ElevatorStillCommand;
 import frc.robot.Commands.ElevatorUpCommand;
+import frc.robot.Commands.ResetDrive;
 import frc.robot.Commands.AlgaeGrabCommand;
 import frc.robot.Commands.CoralGrabCommand;
 import frc.robot.Commands.CoralPositionResetCommand;
@@ -43,6 +44,7 @@ import frc.robot.Commands.CoralDownCommand;
 import frc.robot.Commands.CoralUpCommand;
 import frc.robot.Commands.CoralStillCommand;
 import frc.robot.Commands.CoralPositionStillCommand;
+import frc.robot.Commands.AimWithLimelight;
 import frc.robot.Commands.AlgaeDownCommand;
 import frc.robot.Commands.AlgaeMiddleCommand;
 import frc.robot.Commands.AlgaePositionResetCommand;
@@ -63,6 +65,9 @@ import frc.robot.subsystems.CoralPivotSubsystem;
 import frc.robot.subsystems.CoralRotateSubsystem;
 import frc.robot.subsystems.CoralSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.LimelightHelpers;
+import frc.robot.subsystems.LimelightSubsystem;
+
 
 public class RobotContainer {
     // kSpeedAt12Volts desired top speed
@@ -86,6 +91,9 @@ public class RobotContainer {
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
     private final Telemetry logger = new Telemetry(MaxSpeed);
+
+    private LimelightHelpers limelighthelpers = new LimelightHelpers();
+    private LimelightSubsystem limelight = new LimelightSubsystem(limelighthelpers);
 
     private final CommandXboxController joystick = new CommandXboxController(0);
     private final CommandXboxController operator = new CommandXboxController(1);
@@ -165,6 +173,9 @@ public class RobotContainer {
     AlgaeGrabCommand AlgaeGrab = new AlgaeGrabCommand(m_algae, m_algaePivot);
     AlgaeReleaseCommand AlgaeRelease = new AlgaeReleaseCommand(m_algae);
     AlgaeStillCommand AlgaeStill = new AlgaeStillCommand(m_algae);
+
+    AimWithLimelight LimelightAim = new AimWithLimelight(limelight, drivetrain);
+    ResetDrive DriveReset = new ResetDrive(drivetrain, joystick, EffectiveSpeed());
 
 
     PathPlannerAuto testautoooo;
@@ -334,8 +345,12 @@ public class RobotContainer {
         
 
         //RightBumperDriver.onTrue(AlgaePositionUp); // Commented out to remain in middle position
-        RightBumperDriver.onTrue(AlgaeRelease);
-        RightBumperDriver.onFalse(AlgaeStill);
+        // RightBumperDriver.onTrue(AlgaeRelease);
+        // RightBumperDriver.onFalse(AlgaeStill);
+        RightBumperDriver.onTrue(LimelightAim);
+        RightBumperDriver.onFalse(DriveReset);
+
+
 
         // Climb commands
         //StartButtonDriver.onTrue(AlgaePositionDown);
@@ -368,6 +383,8 @@ public class RobotContainer {
 
     public void periodic() {
 
+        //SmartDashboard.putNumber("difference", 23-limelight.getTX());
+        limelight.periodic();
         //m_coral.ElevatorIsLowered(m_elevator.ElevatorLowered());
 
 
