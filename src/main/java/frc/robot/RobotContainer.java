@@ -275,6 +275,15 @@ public class RobotContainer {
 
         drivetrain.registerTelemetry(logger::telemeterize);
 
+        // Hold down the Y Button to allow Limelight to center on the tag
+        // YButtonDriver.whileTrue(
+        //     drivetrain.applyRequest(() -> drive.withVelocityX(0) 
+        //         .withVelocityY((23 - limelight.getTX()) * 0.05) 
+        //         .withRotationalRate(0) 
+        //     )
+        // );
+
+
         // Sample to use Runnable commands - not working properly
         //YButtonOp.onTrue(m_coralPivot.runOnce(m_coralPivot.SetPivotLowered()));
 
@@ -347,8 +356,10 @@ public class RobotContainer {
         //RightBumperDriver.onTrue(AlgaePositionUp); // Commented out to remain in middle position
         // RightBumperDriver.onTrue(AlgaeRelease);
         // RightBumperDriver.onFalse(AlgaeStill);
-        RightBumperDriver.onTrue(LimelightAim);
-        RightBumperDriver.onFalse(DriveReset);
+
+        // Testing Limelight command
+        // RightBumperDriver.onTrue(LimelightAim);
+        // RightBumperDriver.onFalse(DriveReset);
 
 
 

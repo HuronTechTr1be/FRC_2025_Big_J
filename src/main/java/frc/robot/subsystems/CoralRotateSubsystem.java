@@ -24,6 +24,18 @@ public final class CoralRotateSubsystem extends SuperClassMotor {
     }
 
 
+    // @Override
+    // public void gotoZeroInit() {
+
+    //     // When finding zero on the rotate, need to do the following:
+    //     //  1. Set encoder to max raised position
+    //     //  2. Start to home slowly
+    //     //  3. Return atLimitLow true if either on the switch or at zero
+    //     super.setPosition(CoralRotateSubsystemConstants.k_pointRaised);
+
+    //     super.gotoZeroInit();
+    // }
+
     @Override
     public boolean atZero() {
 
@@ -47,7 +59,7 @@ public final class CoralRotateSubsystem extends SuperClassMotor {
         // }
 
         // return done;
-        return true;    //skip for testing
+        return true;    //skip - no atRest exists
     }
 
 
@@ -80,7 +92,7 @@ public final class CoralRotateSubsystem extends SuperClassMotor {
 
     @Override
     public double speedDownSlow() {
-        return CoralRotateSubsystemConstants.k_speedDownFactor;
+        return CoralRotateSubsystemConstants.k_speedDownFactorSlow;
     }
 
 }

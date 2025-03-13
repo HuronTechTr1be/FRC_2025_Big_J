@@ -313,7 +313,8 @@ public class TunerConstants {
     public static final class CoralRotateSubsystemConstants {
 
         public static final double k_speedUpFactor = 0.3;
-        public static final double k_speedDownFactor = -0.1;
+        public static final double k_speedDownFactor = -0.2;
+        public static final double k_speedDownFactorSlow = -0.1;
         public static final double k_pointRaised = 32;
 
     }

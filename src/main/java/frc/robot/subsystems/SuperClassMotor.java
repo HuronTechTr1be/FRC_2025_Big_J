@@ -101,6 +101,12 @@ public abstract class SuperClassMotor extends SubsystemBase {
 
     }
 
+    protected void setPosition(double setTo) {
+
+        m_relativeEncoder.setPosition(setTo);
+        
+    }
+
 
     protected abstract double speedUpFast();
     protected abstract double speedUpSlow();
