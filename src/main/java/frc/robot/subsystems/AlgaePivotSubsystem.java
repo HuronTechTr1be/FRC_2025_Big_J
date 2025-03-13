@@ -18,27 +18,27 @@ public final class AlgaePivotSubsystem extends SuperClassMotor {
     @Override
     public boolean atZero() {
 
-        // boolean done = atLimitHigh();
+        boolean done = atLimitHigh();
 
-        // if (done == false) {
-        //     goUpSlow();
-        // }
+        if (done == false) {
+            goUpSlow();
+        }
 
-        // return done;
-        return true;    //skip for testing
+        return done;
+        //return true;    //skip for testing
     }
 
     @Override
     public boolean atRest() {
         
-        // boolean done = atMiddle();
+        boolean done = atMiddle();
 
-        // if (done == false) {
-        //     gotoMiddle();
-        // }
+        if (done == false) {
+            gotoMiddle();
+        }
 
-        // return done;
-        return true;    //skip for testing
+        return done;
+        //return true;    //skip for testing
     }
 
 
