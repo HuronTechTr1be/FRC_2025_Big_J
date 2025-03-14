@@ -48,6 +48,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "CoralPositionScore"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "2_to_human_player"
@@ -62,7 +68,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.0
+            "waitTime": 3.5
           }
         },
         {
