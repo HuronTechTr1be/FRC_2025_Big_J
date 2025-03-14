@@ -317,10 +317,10 @@ public class RobotContainer {
         DpadDownOp.onTrue(elevatorDown);
         DpadDownOp.onFalse(elevatorStill);
 
-        StartButtonDriver.onTrue(elevatorReset);
-        StartButtonDriver.onTrue(coralPositionReset);
-        StartButtonDriver.onTrue(coralRotateReset);
-        StartButtonDriver.onTrue(algaePositionReset);
+        StartButtonDriver.and(BackButtonDriver).onTrue(elevatorReset);
+        StartButtonDriver.and(BackButtonDriver).onTrue(coralPositionReset);
+        StartButtonDriver.and(BackButtonDriver).onTrue(coralRotateReset);
+        StartButtonDriver.and(BackButtonDriver).onTrue(algaePositionReset);
 
         //Algea Knocker Downer
         //DpadRightDriver.onTrue(climbDown);

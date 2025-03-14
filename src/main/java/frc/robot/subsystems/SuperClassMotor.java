@@ -20,6 +20,7 @@ public abstract class SuperClassMotor extends SubsystemBase {
     private boolean m_findAtRest = false;
     private boolean m_goingUp;
     private boolean m_goingDown;
+    private int m_zeroCounter;
 
 
     public SuperClassMotor(int deviceId, String deviceName) {
@@ -52,6 +53,7 @@ public abstract class SuperClassMotor extends SubsystemBase {
     public void gotoZeroInit() {
 
         m_findZero = !atZero();
+        m_zeroCounter = 0;
 
     }
 
@@ -267,7 +269,11 @@ public abstract class SuperClassMotor extends SubsystemBase {
     public void periodic() {
 
         if (m_findZero) {
-            gotoZeroFinish();
+            // if (++m_zeroCounter > 100) {
+            //     m_findZero = false;
+            // } else {
+                gotoZeroFinish();
+            // }
         }
 
         if (m_findAtRest) {
