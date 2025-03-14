@@ -7,7 +7,11 @@
     "score",
     "to_human_player"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "Bottom",
+    "Middle",
+    "Top"
+  ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,

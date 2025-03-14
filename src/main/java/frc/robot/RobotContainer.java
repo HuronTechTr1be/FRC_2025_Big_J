@@ -199,6 +199,9 @@ public class RobotContainer {
         NamedCommands.registerCommand("ElevatorSetMiddle", ElevatorSetMiddle);
         NamedCommands.registerCommand("ElevatorSetLowered", ElevatorSetLowered);
 
+        NamedCommands.registerCommand("CoralRotateUp", CoralRotateUp);
+        NamedCommands.registerCommand("CoralRotateDown", CoralRotateDown);
+
 
         // NamedCommands.registerCommand("climbUp", climbUp);
         // NamedCommands.registerCommand("climbDown", climbDown);

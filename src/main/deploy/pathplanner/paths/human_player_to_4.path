@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.533,
-        "y": 0.644
+        "x": 1.3060739436619704,
+        "y": 0.6377640845070403
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.542755681818182,
-        "y": 0.38425000000000065
+        "x": 2.3158296254801525,
+        "y": 0.37801408450704094
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "BottomHumanPlayer"
     },
     {
       "anchor": {
@@ -48,7 +48,7 @@
   "folder": "score",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -127.00000000000001
+    "rotation": -126.0
   },
   "useDefaultConstraints": true
 }

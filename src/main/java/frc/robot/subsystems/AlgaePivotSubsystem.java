@@ -10,8 +10,8 @@ public final class AlgaePivotSubsystem extends SuperClassMotor {
 
         super(deviceId, "AlgaePivot");
 
-        //gotoZeroInit();   // comment this out to skip the automatic homing process
-        setPositionZero();  // in lieu of automatic homing, just set position to zero
+        gotoZeroInit();   // comment this out to skip the automatic homing process
+        //setPositionZero();  // in lieu of automatic homing, just set position to zero
     }
 
 
