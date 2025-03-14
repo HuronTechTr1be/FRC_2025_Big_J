@@ -7,37 +7,26 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 3.0
+            "waitTime": 5.0
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "CoralGrab"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "CoralStill"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ElevatorSetLowered"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "CoralPositionDown"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "CoralPositionDown"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CoralRotateUp"
+                }
+              }
+            ]
           }
         },
         {
@@ -49,13 +38,37 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralRelease"
+            "name": "CoralSoftRelease"
           }
         },
         {
           "type": "wait",
           "data": {
             "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralStill"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3_to_human_player"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralGrab"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
           }
         },
         {

@@ -11,27 +11,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "CoralGrab"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "CoralStill"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "CoralPositionDown"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "CoralPositionDown"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CoralRotateUp"
+                }
+              }
+            ]
           }
         },
         {
@@ -43,7 +38,7 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralSlowRelease"
+            "name": "CoralSoftRelease"
           }
         },
         {
