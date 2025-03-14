@@ -357,8 +357,8 @@ public class RobotContainer {
         
 
         //RightBumperDriver.onTrue(AlgaePositionUp); // Commented out to remain in middle position
-        // RightBumperDriver.onTrue(AlgaeRelease);
-        // RightBumperDriver.onFalse(AlgaeStill);
+        RightBumperDriver.onTrue(AlgaeRelease);
+        RightBumperDriver.onFalse(AlgaeStill);
 
         // Testing Limelight command
         // RightBumperDriver.onTrue(LimelightAim);

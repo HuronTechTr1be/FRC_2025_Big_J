@@ -39,7 +39,7 @@ public final class CoralRotateSubsystem extends SuperClassMotor {
     @Override
     public boolean atZero() {
 
-        boolean done = atLimitLow();
+        boolean done = onSwitch();  //atLimitLow();
 
         if (done == false) {
             goDownSlow();
@@ -63,6 +63,10 @@ public final class CoralRotateSubsystem extends SuperClassMotor {
     }
 
 
+    private boolean onSwitch() {
+        return m_limitSwitch.isPressed();
+    }
+
     @Override
     public boolean atLimitHigh() {
         return (CoralRotateSubsystemConstants.k_pointRaised - getPosition() <= 1);
@@ -70,8 +74,9 @@ public final class CoralRotateSubsystem extends SuperClassMotor {
 
     @Override
     public boolean atLimitLow() {
-        return m_limitSwitch.isPressed();
+        //return m_limitSwitch.isPressed();
         //return ((getPosition() <= 1) || m_limitSwitch.isPressed());
+        return (getPosition() <= 0.5);
     }
 
 

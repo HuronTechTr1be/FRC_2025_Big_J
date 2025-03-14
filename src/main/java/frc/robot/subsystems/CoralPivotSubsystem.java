@@ -30,7 +30,7 @@ public final class CoralPivotSubsystem extends SuperClassMotor {
     @Override
     public boolean atZero() {
 
-        boolean done = atLimitHigh();
+        boolean done = onSwitch();  //atLimitHigh();
 
         if (done == false) {
             goUpSlow();
@@ -54,10 +54,15 @@ public final class CoralPivotSubsystem extends SuperClassMotor {
     }
 
 
+    private boolean onSwitch() {
+        return m_limitSwitch.isPressed();
+    }
+
     @Override
     public boolean atLimitHigh() {
-        return m_limitSwitch.isPressed();
+        //return m_limitSwitch.isPressed();
         //return ((getPosition() <= 1) || m_limitSwitch.isPressed());
+        return (getPosition() <= 2.5);
     }
 
     @Override

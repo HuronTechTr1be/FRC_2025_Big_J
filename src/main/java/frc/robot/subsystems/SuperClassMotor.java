@@ -259,6 +259,8 @@ public abstract class SuperClassMotor extends SubsystemBase {
         SmartDashboard.putBoolean(m_deviceName + " Lower Limit", atLimitLow());
         SmartDashboard.putBoolean(m_deviceName + " Find Zero", m_findZero);
         SmartDashboard.putBoolean(m_deviceName + " Find AtRest", m_findAtRest);
+        SmartDashboard.putBoolean(m_deviceName + " Going Up", m_goingUp);
+        SmartDashboard.putBoolean(m_deviceName + " Going Down", m_goingDown);
     }
 
 
