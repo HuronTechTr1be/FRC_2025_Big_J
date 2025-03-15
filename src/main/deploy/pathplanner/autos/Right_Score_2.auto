@@ -5,39 +5,34 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "CoralGrab"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "CoralStill"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "CoralPositionDown"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "CoralPositionDown"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CoralRotateUp"
+                }
+              }
+            ]
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Middle_To_2"
+            "pathName": "OtherColour_Middle_To_4"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "CoralRelease"
+            "name": "CoralSoftRelease"
           }
         },
         {
@@ -61,13 +56,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "2_to_human_player"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
+            "pathName": "4_to_human_player"
           }
         },
         {
@@ -97,13 +86,43 @@
         {
           "type": "path",
           "data": {
-            "pathName": "human_player_to_2"
+            "pathName": "Bottom_human_player_to_5"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "CoralRelease"
+            "name": "CoralSoftRelease"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralStill"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralPositionScore"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "5_to_human_player"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralGrab"
           }
         },
         {
@@ -122,6 +141,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Middle",
+  "folder": null,
   "choreoAuto": false
 }

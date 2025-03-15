@@ -269,11 +269,13 @@ public abstract class SuperClassMotor extends SubsystemBase {
     public void periodic() {
 
         if (m_findZero) {
-            // if (++m_zeroCounter > 100) {
-            //     m_findZero = false;
-            // } else {
+            if (++m_zeroCounter > 600) {
+                 m_findZero = false;
+                 goStill();
+                 //setPositionZero();
+                  } else {
                 gotoZeroFinish();
-            // }
+             }
         }
 
         if (m_findAtRest) {
