@@ -55,8 +55,6 @@ public class ElevatorSubsystem extends SubsystemBase {
     private void UpdateDashboard() {
         SmartDashboard.putBoolean("Elevator Lowered", atLowerLimit());
         SmartDashboard.putBoolean("Elevator Raised", atUpperLimit());
-        SmartDashboard.putNumber("Elevator Left Position", m_elevatorLeft.getPosition());
-        SmartDashboard.putNumber("Elevator Right Position", m_elevatorRight.getPosition());
     }
 
     public void periodic() {
@@ -68,7 +66,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         if (ElevatorLowered()) {
             m_elevatorLeft.setPositionZero();
             m_elevatorRight.setPositionZero();
-            if (m_target == "Lowered") {
+            if ((m_target == "Lowered") || (m_movingDown)) {
                 ElevatorStill();
             }
         }
@@ -84,7 +82,7 @@ public class ElevatorSubsystem extends SubsystemBase {
             }
         }
         if (ElevatorRaised()) {
-            if (m_target == "High") {
+            if ((m_target == "High") || (m_movingUp)) {
                 ElevatorStill();
             }
         }

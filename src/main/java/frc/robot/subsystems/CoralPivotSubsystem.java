@@ -67,7 +67,7 @@ public final class CoralPivotSubsystem extends SuperClassMotor {
 
     @Override
     public boolean atLimitLow() {
-        return (Math.abs(CoralPivotSubsystemConstants.k_pointLowered - getPosition()) <= 1.5);
+        return ((CoralPivotSubsystemConstants.k_pointLowered - getPosition()) <= 1.5);
     }
 
 
