@@ -240,10 +240,10 @@ public class RobotContainer {
         configureBindings();
     }
 
-    private double SpeedHigh = MaxSpeed * 0.72;
+    private double SpeedHigh = MaxSpeed * 0.75;
     private double SpeedLow = MaxSpeed * 0.11;
-    private double RotationHigh = MaxAngularRate * 0.55;
-    private double RotationLow = MaxAngularRate * 0.25;
+    private double RotationHigh = MaxAngularRate * 0.8;
+    private double RotationLow = MaxAngularRate * 0.5;
 
     private double EffectiveSpeed() {
         return (LeftTriggerDriver.getAsBoolean() ? SpeedLow : SpeedHigh);
